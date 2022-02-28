@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "934922726386",
+    "project_id": "projet-dsn-chat",
+    "storage_bucket": "projet-dsn-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934922726386:android:28b99ed3f95399b02c596b",
+        "android_client_info": {
+          "package_name": "fr.limayrac.projetdsnchatandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934922726386-uttt2vrmddsphhrc37l1ndknorulcuaf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1vmE6O0eVJn9lzma4-xrIVesniBxRUQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934922726386-uttt2vrmddsphhrc37l1ndknorulcuaf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

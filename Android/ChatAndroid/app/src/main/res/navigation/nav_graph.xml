@@ -3,26 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/Login">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="fr.limayrac.projetdsnchatandroid.FirstFragment"
+        android:id="@+id/Login"
+        android:name="fr.limayrac.projetdsnchatandroid.LoginFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_login">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/Register" />
+        <action
+            android:id="@+id/action_Login_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="fr.limayrac.projetdsnchatandroid.SecondFragment"
+        android:id="@+id/Register"
+        android:name="fr.limayrac.projetdsnchatandroid.RegisterFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/fragment_register">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/Login" />
+    </fragment>
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="fr.limayrac.projetdsnchatandroid.ResetPasswordFragment"
+        android:label="fragment_reset_password"
+        tools:layout="@layout/fragment_reset_password" >
+        <action
+            android:id="@+id/action_resetPasswordFragment_to_Login"
+            app:destination="@id/Login" />
     </fragment>
 </navigation>

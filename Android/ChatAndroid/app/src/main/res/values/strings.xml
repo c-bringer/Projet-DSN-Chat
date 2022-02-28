@@ -7,6 +7,21 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="message_bienvenue">Bienvenue sur l\'application de chat</string>
+    <string name="message_connexion">Connexion</string>
+    <string name="message_inscription">Inscription</string>
+    <string name="message_reset_password">Demander un nouveau mot de passe</string>
+    <string name="button_connexion">Se connecter</string>
+    <string name="button_renvoyer_mdp">Renvoyer un mot de passe</string>
+    <string name="button_inscription">S\'inscrire</string>
+    <string name="placeholder_email">Email</string>
+    <string name="placeholder_password">Mot de passe</string>
+    <string name="placeholder_pseudo">Pseudo</string>
+    <string name="button_reset_password">Mot de passe perdu ?</string>
+
+
+
+
+
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
