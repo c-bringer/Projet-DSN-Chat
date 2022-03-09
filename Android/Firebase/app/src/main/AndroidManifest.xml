@@ -35,6 +35,11 @@
         <activity android:name=".ui.LoginActivity"
             android:label="@string/toolbar_title_login_activity"
             android:parentActivityName=".ui.MainActivity"/>
+
+        <!-- FORGET PASSWORD ACTIVITY -->
+        <activity android:name=".ui.ForgetPasswordActivity"
+            android:label="@string/toolbar_title_forget_password_activity"
+            android:parentActivityName=".ui.MainActivity"/>
     </application>
 
 </manifest>

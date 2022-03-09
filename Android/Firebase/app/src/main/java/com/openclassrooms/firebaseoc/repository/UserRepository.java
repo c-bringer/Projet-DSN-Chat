@@ -73,7 +73,7 @@ public  final class UserRepository {
                                 String urlPicture = (user.getPhotoUrl() != null) ? user.getPhotoUrl().toString() : null;
                                 String uid = user.getUid();
 
-                                User userToCreate = new User(uid, pseudo, null, urlPicture);
+                                User userToCreate = new User(uid, pseudo, urlPicture);
 
                                 Task<DocumentSnapshot> userData = getUserData();
                                 // If the user already exist in Firestore

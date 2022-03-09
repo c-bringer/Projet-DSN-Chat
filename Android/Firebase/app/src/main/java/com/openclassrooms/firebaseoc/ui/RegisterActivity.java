@@ -74,7 +74,8 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding> {
                                           String user = documentSnapshot.getString(USERNAME_FIELD_NAME);
 
                                           if(user.equals(pseudo)) {
-                                             showSnackBar(getString(R.string.pseudo_exist));                                             }
+                                             showSnackBar(getString(R.string.pseudo_exist));
+                                          }
                                        }
                                     }
 

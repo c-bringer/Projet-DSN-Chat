@@ -31,10 +31,18 @@
     <string name="password_not_valid">Veuillez saisir un mot de passe valide</string>
     <string name="register_valid">Inscription validé</string>
     <string name="login_valid">Connexion validé !</string>
+    <string name="login_not_valid">Mauvais couple d\'identifiants</string>
 
     <!-- LOGIN ACTIVITY -->
     <string name="login_activity_description">Connexion</string>
     <string name="toolbar_title_login_activity">Connexion</string>
+    <string name="button_forget_password">Mot de passe oublié ?</string>
+
+    <!-- FORGET PASSWORD ACTIVITY -->
+    <string name="email_reset_password_send">Un email de rénitialisation a été envoyé</string>
+    <string name="email_doesnt_exist">Cette adresse mail n\'existe pas</string>
+    <string name="forget_password_activity_description">Mot de passe oublié</string>
+    <string name="toolbar_title_forget_password_activity">Mot de passe oublié</string>
 
     <!-- PROFILE ACTIVITY -->
     <string name="toolbar_title_profile_activity">Votre Profil</string>

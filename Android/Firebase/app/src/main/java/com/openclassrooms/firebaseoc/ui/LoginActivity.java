@@ -53,8 +53,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                                 .addOnCompleteListener(this, task -> {
                                     if (task.isSuccessful()) {
                                         startProfileActivity();
-                                    } else {
                                         showSnackBar(getString(R.string.login_valid));
+                                    } else {
+                                        showSnackBar(getString(R.string.login_not_valid));
                                     }
                                 });
                 } else {
@@ -63,6 +64,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
             } else {
                 showSnackBar(getString(R.string.email_not_valid));
             }
+        });
+
+        // Forget Password Button
+        binding.forgetPasswordButton.setOnClickListener(view -> {
+            startForgetPasswordActivity();
         });
     }
 
@@ -75,6 +81,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
     // Launching Profile Activity
     private void startProfileActivity() {
         Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    // Launching ForgetPassword Activity
+    private void startForgetPasswordActivity() {
+        Intent intent = new Intent(this, ForgetPasswordActivity.class);
         startActivity(intent);
     }
 }

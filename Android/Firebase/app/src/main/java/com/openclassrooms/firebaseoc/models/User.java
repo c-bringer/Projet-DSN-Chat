@@ -5,13 +5,12 @@ import androidx.annotation.Nullable;
 public class User {
    private String uid;
    private String username;
-   private String password;
    @Nullable
    private String urlPicture;
 
    public User() { }
 
-   public User(String uid, String username, @Nullable String password, @Nullable String urlPicture) {
+   public User(String uid, String username, @Nullable String urlPicture) {
       this.uid = uid;
       this.username = username;
       this.urlPicture = urlPicture;
@@ -23,14 +22,6 @@ public class User {
 
    public void setUid(String uid) {
       this.uid = uid;
-   }
-
-   public String getPassword() {
-      return password;
-   }
-
-   public void setPassword(String password) {
-      this.password = password;
    }
 
    public String getUsername() {
