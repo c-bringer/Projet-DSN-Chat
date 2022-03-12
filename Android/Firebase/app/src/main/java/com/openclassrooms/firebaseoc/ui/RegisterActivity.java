@@ -15,6 +15,7 @@ import com.openclassrooms.firebaseoc.R;
 import com.openclassrooms.firebaseoc.databinding.ActivityRegisterBinding;
 import com.openclassrooms.firebaseoc.manager.UserManager;
 
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends BaseActivity<ActivityRegisterBinding> {
@@ -81,7 +82,12 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding> {
 
                                     if(task1.getResult().size() == 0) {
                                        if(!password.equals("") && !password.isEmpty() && Pattern.matches(passwordPattern, password)) {
-                                          userManager.createUser(email, password, pseudo);
+                                          // Prends une couleur au hasard parmis celle du tableau pour les messages
+                                          int[] androidColors = view.getContext().getResources().getIntArray(R.array.messageColors);
+                                          int randomAndroidColor = androidColors[new Random().nextInt(androidColors.length)];
+                                          String hexColor = String.format("#%06X", (0xFFFFFF & randomAndroidColor));
+
+                                          userManager.createUser(email, password, pseudo, hexColor);
                                           showSnackBar(getString(R.string.register_valid));
                                        } else {
                                           showSnackBar(getString(R.string.password_not_valid));

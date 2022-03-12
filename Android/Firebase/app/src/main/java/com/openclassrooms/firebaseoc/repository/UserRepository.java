@@ -61,7 +61,7 @@ public  final class UserRepository {
     }
 
     // Créer un utilisateur dans Firestore
-    public void createUser(String email, String password, String pseudo) {
+    public void createUser(String email, String password, String pseudo, String messageColor) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -73,7 +73,7 @@ public  final class UserRepository {
                                 String urlPicture = (user.getPhotoUrl() != null) ? user.getPhotoUrl().toString() : null;
                                 String uid = user.getUid();
 
-                                User userToCreate = new User(uid, pseudo, urlPicture);
+                                User userToCreate = new User(uid, pseudo, urlPicture, messageColor);
 
                                 Task<DocumentSnapshot> userData = getUserData();
                                 // Si l'utilisateur existe déjà dans Firestore

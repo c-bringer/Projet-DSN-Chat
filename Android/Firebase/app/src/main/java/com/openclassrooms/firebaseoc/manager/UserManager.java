@@ -43,8 +43,8 @@ public class UserManager {
       return userRepository.signOut(context);
    }
 
-   public void createUser(String email, String password, String pseudo) {
-      userRepository.createUser(email, password, pseudo);
+   public void createUser(String email, String password, String pseudo, String messageColor) {
+      userRepository.createUser(email, password, pseudo, messageColor);
    }
 
    public Task<User> getUserData() {

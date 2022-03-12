@@ -1,5 +1,7 @@
 package com.openclassrooms.firebaseoc.ui.chat;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
@@ -25,7 +27,8 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     private ItemChatBinding binding;
 
     private final int colorCurrentUser;
-    private final int colorRemoteUser;
+//    private final int colorRemoteUser;
+    private int colorRemoteUser;
 
     private boolean isSender;
 
@@ -35,16 +38,20 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         binding = ItemChatBinding.bind(itemView);
 
         // Couleur par defaut
-//        int[] androidColors = itemView.getContext().getResources().getIntArray(R.array.messageColors);
-//        int randomAndroidColor = androidColors[new Random().nextInt(androidColors.length)];
-
         colorCurrentUser = ContextCompat.getColor(itemView.getContext(), R.color.colorAccent);
-        colorRemoteUser = ContextCompat.getColor(itemView.getContext(), R.color.colorPrimary);
+//        colorRemoteUser = ContextCompat.getColor(itemView.getContext(), R.color.colorPrimary);
     }
 
+    @SuppressLint("ResourceType")
     public void updateWithMessage(Message message, RequestManager glide) {
         binding.messageTextView.setText(message.getMessage());
         binding.messageTextView.setTextAlignment(isSender ? View.TEXT_ALIGNMENT_TEXT_END : View.TEXT_ALIGNMENT_TEXT_START);
+
+        if(message.getUserSender().getMessageColor() != null) {
+            colorRemoteUser = Color.parseColor(message.getUserSender().getMessageColor());
+        } else {
+            colorRemoteUser = ContextCompat.getColor(itemView.getContext(), R.color.colorPrimary);
+        }
 
         if(message.getUserSender().getUsername() != null) {
             binding.pseudoTextView.setText(message.getUserSender().getUsername());
