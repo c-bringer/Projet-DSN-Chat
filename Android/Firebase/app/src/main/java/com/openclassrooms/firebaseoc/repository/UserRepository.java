@@ -55,12 +55,12 @@ public  final class UserRepository {
         return AuthUI.getInstance().delete(context);
     }
 
-    // Get the Collection Reference
+    // Obtenir la référence de la collection
     private CollectionReference getUsersCollection() {
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 
-    // Create User in Firestore
+    // Créer un utilisateur dans Firestore
     public void createUser(String email, String password, String pseudo) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
@@ -76,7 +76,7 @@ public  final class UserRepository {
                                 User userToCreate = new User(uid, pseudo, urlPicture);
 
                                 Task<DocumentSnapshot> userData = getUserData();
-                                // If the user already exist in Firestore
+                                // Si l'utilisateur existe déjà dans Firestore
                                 userData.addOnSuccessListener(documentSnapshot -> {
                                     this.getUsersCollection().document(uid).set(userToCreate);
                                 });
@@ -87,7 +87,7 @@ public  final class UserRepository {
                     });
     }
 
-    // Get User Data from Firestore
+    // Obtenir les données utilisateur de Firestore
     public Task<DocumentSnapshot> getUserData() {
         String uid = this.getCurrentUserUID();
 
@@ -98,7 +98,7 @@ public  final class UserRepository {
         }
     }
 
-    // Delete the User from Firestore
+    // Supprimer l'utilisateur de Firestore
     public void deleteUserFromFirestore() {
         String uid = this.getCurrentUserUID();
 

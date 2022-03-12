@@ -8,4 +8,14 @@
     <color name="colorGreen">#6BB18C</color>
     <color name="colorSandLight">#ECDAAF</color>
     <color name="colorSand">#EBCB94</color>
+
+    <integer-array name="messageColors">
+        <item>@color/colorPrimary</item>
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/colorAccent</item>
+        <item>@color/colorError</item>
+        <item>@color/colorGreen</item>
+        <item>@color/colorSandLight</item>
+        <item>@color/colorSand</item>
+    </integer-array>
 </resources>

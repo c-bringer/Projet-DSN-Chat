@@ -24,7 +24,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding> {
    private static final String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
    @Override
-   ActivityRegisterBinding getViewBinding() {
+   protected ActivityRegisterBinding getViewBinding() {
       return ActivityRegisterBinding.inflate(getLayoutInflater());
    }
 
@@ -43,13 +43,13 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding> {
       setupListeners();
    }
 
-   // Show Snack Bar with a message
+   // Montrer Snack Bar avec un message
    private void showSnackBar( String message) {
       Snackbar.make(binding.registerLayout, message, Snackbar.LENGTH_SHORT).show();
    }
 
    private void setupListeners() {
-      // Register Button
+      // Bouton inscription
       binding.registerButton.setOnClickListener(view -> {
          FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
@@ -101,7 +101,7 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding> {
       });
    }
 
-   // Launching Main Activity
+   // Lancer Main Activity
    private void startMainActivity() {
       Intent intent = new Intent(this, MainActivity.class);
       startActivity(intent);

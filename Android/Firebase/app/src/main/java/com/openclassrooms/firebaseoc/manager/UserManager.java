@@ -48,14 +48,14 @@ public class UserManager {
    }
 
    public Task<User> getUserData() {
-      // Get the user from Firestore and cast it to a User model Object
+      // Obtenir l'utilisateur de Firestore et le convertir en un objet de modèle d'utilisateur.
       return userRepository.getUserData().continueWith(task -> task.getResult().toObject(User.class)) ;
    }
 
    public Task<Void> deleteUser(Context context){
-      // Delete the user account from the Auth
+      // Supprimer le compte d'utilisateur de l'Auth
       return userRepository.deleteUser(context).addOnCompleteListener(task -> {
-         // Once done, delete the user datas from Firestore
+         // Une fois cela fait, supprimez les données de l'utilisateur de Firestore
          userRepository.deleteUserFromFirestore();
       });
    }

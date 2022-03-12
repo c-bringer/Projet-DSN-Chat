@@ -22,7 +22,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
    private UserManager userManager = UserManager.getInstance();
 
    @Override
-   ActivityProfileBinding getViewBinding() {
+   protected ActivityProfileBinding getViewBinding() {
       return ActivityProfileBinding.inflate(getLayoutInflater());
    }
 
@@ -34,14 +34,14 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
    }
 
    private void setupListeners() {
-      // Sign out button
+      // Bouton déconnexion
       binding.signOutButton.setOnClickListener(view -> {
          userManager.signOut(this).addOnSuccessListener(aVoid -> {
             finish();
          });
       });
 
-      // Update button
+      // Bouton mettre à jour
       binding.updateButton.setOnClickListener(view -> {
          binding.progressBar.setVisibility(View.VISIBLE);
 
@@ -79,7 +79,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 //                    });
       });
 
-      // Delete button
+      // Bouton supprimer
       binding.deleteButton.setOnClickListener(view -> {
          new AlertDialog.Builder(this)
                  .setMessage(R.string.popup_message_confirmation_delete_account)
@@ -110,7 +110,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 
    private void getUserData() {
       userManager.getUserData().addOnSuccessListener(user -> {
-         // Set the data with the user information
+         // Définir les données avec les informations de l'utilisateur
          String username = TextUtils.isEmpty(user.getUsername()) ? getString(R.string.info_no_username_found) : user.getUsername();
          binding.pseudoTextView.setText(username);
       });
@@ -124,16 +124,16 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
    }
 
    private void setTextUserData(FirebaseUser user) {
-      //Get email & username from User
+      // Obtenir l'email et le nom d'utilisateur de l'utilisateur
       String email = TextUtils.isEmpty(user.getEmail()) ? getString(R.string.info_no_email_found) : user.getEmail();
       String username = TextUtils.isEmpty(user.getDisplayName()) ? getString(R.string.info_no_username_found) : user.getDisplayName();
 
-      //Update views with data
+      // Mise à jour des vues avec des données
       binding.emailEditText.setText(email);
       binding.pseudoTextView.setText(username);
    }
 
-   // Show Snack Bar with a message
+   // Montrer Snack Bar avec un message
    private void showSnackBar( String message) {
       Snackbar.make(binding.profileLayout, message, Snackbar.LENGTH_SHORT).show();
    }

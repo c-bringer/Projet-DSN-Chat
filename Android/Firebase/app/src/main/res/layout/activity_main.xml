@@ -70,7 +70,7 @@
             android:id="@+id/chatButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/chat_with_mentor"
+            android:text="@string/button_chat"
             android:textColor="#fff"
             android:textSize="@dimen/default_text_size"
             android:background="@drawable/button_radius_accent_color"

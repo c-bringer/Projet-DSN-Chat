@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_mentor_chat_item_root_view"
+    android:id="@+id/activity_chat_item_root_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/default_margin">
@@ -25,13 +25,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             app:srcCompat="@drawable/ic_anon_user_48dp"/>
-
-        <!-- IMAGE IS MENTOR -->
-        <ImageView
-            android:id="@+id/profileIsMentor"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            app:srcCompat="@drawable/ic_school_black_24dp"/>
 
     </LinearLayout>
 
@@ -85,6 +78,16 @@
                 tools:text="Text example" />
 
         </LinearLayout>
+
+        <!-- PSEUDO MESSAGE -->
+        <TextView
+            android:id="@+id/pseudoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginTop="4dp"
+            android:textSize="@dimen/default_text_size_mini"
+            android:textStyle="bold" />
 
         <!-- DATE MESSAGE -->
         <TextView

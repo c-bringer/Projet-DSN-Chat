@@ -15,7 +15,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
     private UserManager userManager = UserManager.getInstance();
 
     @Override
-    ActivityLoginBinding getViewBinding() {
+    protected ActivityLoginBinding getViewBinding() {
         return ActivityLoginBinding.inflate(getLayoutInflater());
     }
 
@@ -34,13 +34,13 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
         setupListeners();
     }
 
-    // Show Snack Bar with a message
+    // Montrer Snack Bar avec un message
     private void showSnackBar( String message) {
         Snackbar.make(binding.loginLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 
     private void setupListeners() {
-        // Login Button
+        // Bouton connexion
         binding.loginButton.setOnClickListener(view -> {
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
@@ -66,25 +66,25 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
             }
         });
 
-        // Forget Password Button
+        // Bouton mot de passe oublié
         binding.forgetPasswordButton.setOnClickListener(view -> {
             startForgetPasswordActivity();
         });
     }
 
-    // Launching Main Activity
+    // Lancer Main Activity
     private void startMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    // Launching Profile Activity
+    // Lancer Profile Activity
     private void startProfileActivity() {
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
     }
 
-    // Launching ForgetPassword Activity
+    // Lancer ForgetPassword Activity
     private void startForgetPasswordActivity() {
         Intent intent = new Intent(this, ForgetPasswordActivity.class);
         startActivity(intent);
