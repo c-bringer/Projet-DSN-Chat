@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import "@material/floating-label/mdc-floating-label.scss";
+@import "@material/line-ripple/mdc-line-ripple.scss";
+@import "@material/notched-outline/mdc-notched-outline.scss";
+@import "@material/textfield";
+
+:root {
+  --font-color: #737373;
+  --button-color: #039BE5;
+  --button-chat-color: #FFA000;
+  --button-delete-color: #FF5252;
+}
+
+* {
+  font-family: Roboto;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  margin-top: 20px;
+  color: var(--font-color);
+  text-align: center;
+}
+
+.top div{
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.logo {
+  display: block;
+  margin: auto;
+  width: 250px;
+}
+
+.profil-picture {
+  display: block;
+  margin: auto;
+  width: 250px;
+  border-radius: 50%;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 0;
+}
+
+.bottom div{
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.mdc-button {
+  width: 300px;
+  height: 50px !important;
+  background-color: var(--button-color) !important;
+  border-radius: 10px !important;
+}
+
+.chat-button {
+  background-color: var(--button-chat-color) !important;
+}
+
+.delete-button {
+  background-color: var(--button-delete-color) !important;
+}
+
+.mdc-top-app-bar {
+  position: relative !important;
+  background-color: var(--button-color) !important;
+}
+
+.bottom label{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 300px;
+  background-color: white !important;
+}
+
+.top label{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 300px;
+  background-color: white !important;
+}
+
+.mdc-text-field__input {
+  caret-color: #039BE5 !important;
+}

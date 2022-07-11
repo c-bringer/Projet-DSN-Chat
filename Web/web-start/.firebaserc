@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "test": "projet-dsn-chat",
+    "a": "projet-dsn-chat"
+  },
+  "targets": {}
+}

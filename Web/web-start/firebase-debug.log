@@ -1,0 +1,62 @@
+[debug] [2022-07-06T21:36:56.870Z] ----------------------------------------------------------------------
+[debug] [2022-07-06T21:36:56.872Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Utilisateur\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only hosting
+[debug] [2022-07-06T21:36:56.873Z] CLI Version:   11.1.0
+[debug] [2022-07-06T21:36:56.873Z] Platform:      win32
+[debug] [2022-07-06T21:36:56.873Z] Node Version:  v16.14.0
+[debug] [2022-07-06T21:36:56.874Z] Time:          Wed Jul 06 2022 23:36:56 GMT+0200 (heure d’été d’Europe centrale)
+[debug] [2022-07-06T21:36:56.874Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-07-06T21:36:56.968Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-07-06T21:36:56.968Z] > authorizing via signed-in user (gaetan.charronbalat@limayrac.fr)
+[debug] [2022-07-06T21:36:56.969Z] [iam] checking project projet-dsn-chat for permissions ["firebase.projects.get"]
+[debug] [2022-07-06T21:36:56.970Z] > refreshing access token with scopes: []
+[debug] [2022-07-06T21:36:56.972Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2022-07-06T21:36:56.972Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-07-06T21:36:57.144Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2022-07-06T21:36:57.144Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-07-06T21:36:57.167Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/projet-dsn-chat:testIamPermissions [none]
+[debug] [2022-07-06T21:36:57.167Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/projet-dsn-chat:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2022-07-06T21:36:57.821Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/projet-dsn-chat:testIamPermissions 200
+[debug] [2022-07-06T21:36:57.822Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/projet-dsn-chat:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2022-07-06T21:36:57.823Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/projet-dsn-chat [none]
+[debug] [2022-07-06T21:36:58.086Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/projet-dsn-chat 200
+[debug] [2022-07-06T21:36:58.086Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/projet-dsn-chat {"projectId":"projet-dsn-chat","projectNumber":"934922726386","displayName":"Projet DSN Chat","name":"projects/projet-dsn-chat","resources":{"hostingSite":"projet-dsn-chat","storageBucket":"projet-dsn-chat.appspot.com","locationId":"europe-west"},"state":"ACTIVE"}
+[debug] [2022-07-06T21:36:58.088Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/projet-dsn-chat/sites 
+[debug] [2022-07-06T21:36:59.055Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/projet-dsn-chat/sites 200
+[debug] [2022-07-06T21:36:59.055Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/projet-dsn-chat/sites {"sites":[{"name":"projects/projet-dsn-chat/sites/projet-dsn-chat","defaultUrl":"https://projet-dsn-chat.web.app","appId":"1:934922726386:web:eab713ef4435a6212c596b","type":"DEFAULT_SITE"}]}
+[debug] [2022-07-06T21:36:59.056Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/projet-dsn-chat/webApps/1:934922726386:web:eab713ef4435a6212c596b/config [none]
+[debug] [2022-07-06T21:36:59.871Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/projet-dsn-chat/webApps/1:934922726386:web:eab713ef4435a6212c596b/config 200
+[debug] [2022-07-06T21:36:59.871Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/projet-dsn-chat/webApps/1:934922726386:web:eab713ef4435a6212c596b/config {"projectId":"projet-dsn-chat","appId":"1:934922726386:web:eab713ef4435a6212c596b","storageBucket":"projet-dsn-chat.appspot.com","locationId":"europe-west","apiKey":"AIzaSyDRpuw_XvIUuY_YTE6dBUWPwmrlA-mLtOo","authDomain":"projet-dsn-chat.firebaseapp.com","messagingSenderId":"934922726386","measurementId":"G-8HLDXQEHGB"}
+[info] i  hosting: Serving hosting files from: ./public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1m./public\u001b[22m"}}
+[info] +  hosting: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[debug] [2022-07-07T20:16:01.731Z] ----------------------------------------------------------------------
+[debug] [2022-07-07T20:16:01.733Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Utilisateur\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only hosting
+[debug] [2022-07-07T20:16:01.734Z] CLI Version:   11.1.0
+[debug] [2022-07-07T20:16:01.734Z] Platform:      win32
+[debug] [2022-07-07T20:16:01.734Z] Node Version:  v16.14.0
+[debug] [2022-07-07T20:16:01.755Z] Time:          Thu Jul 07 2022 22:16:01 GMT+0200 (heure d’été d’Europe centrale)
+[debug] [2022-07-07T20:16:01.756Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-07-07T20:16:01.843Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-07-07T20:16:01.844Z] > authorizing via signed-in user (gaetan.charronbalat@limayrac.fr)
+[debug] [2022-07-07T20:16:01.844Z] [iam] checking project projet-dsn-chat for permissions ["firebase.projects.get"]
+[debug] [2022-07-07T20:16:01.846Z] > refreshing access token with scopes: []
+[debug] [2022-07-07T20:16:01.850Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2022-07-07T20:16:01.850Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-07-07T20:16:02.027Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2022-07-07T20:16:02.027Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-07-07T20:16:02.047Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/projet-dsn-chat:testIamPermissions [none]
+[debug] [2022-07-07T20:16:02.048Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/projet-dsn-chat:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2022-07-07T20:16:02.712Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/projet-dsn-chat:testIamPermissions 200
+[debug] [2022-07-07T20:16:02.712Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/projet-dsn-chat:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2022-07-07T20:16:02.713Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/projet-dsn-chat [none]
+[debug] [2022-07-07T20:16:03.072Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/projet-dsn-chat 200
+[debug] [2022-07-07T20:16:03.073Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/projet-dsn-chat {"projectId":"projet-dsn-chat","projectNumber":"934922726386","displayName":"Projet DSN Chat","name":"projects/projet-dsn-chat","resources":{"hostingSite":"projet-dsn-chat","storageBucket":"projet-dsn-chat.appspot.com","locationId":"europe-west"},"state":"ACTIVE"}
+[debug] [2022-07-07T20:16:03.077Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/projet-dsn-chat/sites 
+[debug] [2022-07-07T20:16:04.098Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/projet-dsn-chat/sites 200
+[debug] [2022-07-07T20:16:04.098Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/projet-dsn-chat/sites {"sites":[{"name":"projects/projet-dsn-chat/sites/projet-dsn-chat","defaultUrl":"https://projet-dsn-chat.web.app","appId":"1:934922726386:web:eab713ef4435a6212c596b","type":"DEFAULT_SITE"}]}
+[debug] [2022-07-07T20:16:04.099Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/projet-dsn-chat/webApps/1:934922726386:web:eab713ef4435a6212c596b/config [none]
+[debug] [2022-07-07T20:16:04.911Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/projet-dsn-chat/webApps/1:934922726386:web:eab713ef4435a6212c596b/config 200
+[debug] [2022-07-07T20:16:04.911Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/projet-dsn-chat/webApps/1:934922726386:web:eab713ef4435a6212c596b/config {"projectId":"projet-dsn-chat","appId":"1:934922726386:web:eab713ef4435a6212c596b","storageBucket":"projet-dsn-chat.appspot.com","locationId":"europe-west","apiKey":"AIzaSyDRpuw_XvIUuY_YTE6dBUWPwmrlA-mLtOo","authDomain":"projet-dsn-chat.firebaseapp.com","messagingSenderId":"934922726386","measurementId":"G-8HLDXQEHGB"}
+[info] i  hosting: Serving hosting files from: ./public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1m./public\u001b[22m"}}
+[info] +  hosting: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
