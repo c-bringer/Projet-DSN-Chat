@@ -43,6 +43,7 @@
     <string name="email_doesnt_exist">Cette adresse mail n\'existe pas</string>
     <string name="forget_password_activity_description">Mot de passe oublié</string>
     <string name="toolbar_title_forget_password_activity">Mot de passe oublié</string>
+    <string name="button_send_new_password">Envoyer le nouveau mot de passe</string>
 
     <!-- PROFILE ACTIVITY -->
     <string name="toolbar_title_profile_activity">Votre Profil</string>
