@@ -54,6 +54,17 @@ import { getPerformance } from 'firebase/performance';
 
 import { getFirebaseConfig } from './firebase-config.js';
 
+var windowFocus;
+var windowBlur;
+
+window.addEventListener('focus', function() {
+    windowFocus = Date.now();
+
+});
+window.addEventListener('blur', function() {
+    windowBlur = Date.now();
+});
+
 // Boutons de la page index
 document.getElementById('bouton-connexion').addEventListener('click', function() {
     document.getElementById('index').style.display = "none";
@@ -95,6 +106,19 @@ document.getElementById('connecter-to-profil').addEventListener('click', functio
     document.getElementById('connecter').style.display = "none";
 
     document.getElementById('email-change').value = auth.currentUser.email;
+
+    const queryPseudo = query(collection(getFirestore(), 'users'), where("uid", "==", getAuth().currentUser.uid));
+    onSnapshot(queryPseudo, function(snapshot) {
+        snapshot.docChanges().forEach(function(change) {
+            document.getElementById('pseudo-change').innerText = document.getElementById('pseudo-change').innerText + ' ' + change.doc.data().username;
+            if(change.doc.data().urlPicture) {
+                document.getElementById('A').src = change.doc.data().urlPicture;
+            } else {
+                document.getElementById('A').src = "../images/profil_picture.png"
+            }
+        });
+    });
+
     document.getElementById('profil').style.display = "block";
 });
 
@@ -302,6 +326,7 @@ async function saveMessage(messageText, file) {
       }
     }
   });
+  window.scrollTo(-67, document.body.scrollHeight);
 }
 
 // Loads chat messages history and listens for upcoming ones.
@@ -317,18 +342,25 @@ function loadMessages() {
         var message = change.doc.data();
         if (change.doc.data().userSender.uid === getAuth().lastNotifiedUid){
           displayMessage(change.doc.id, message.dateCreated, message.userSender.username,
-              message.message, message.userSender.urlPicture, message.urlImage, true);
+              message.message, message.userSender.urlPicture, message.urlImage, message.userSender.messageColor, true);
         } else {
           displayMessage(change.doc.id, message.dateCreated, message.userSender.username,
-              message.message, message.userSender.urlPicture, message.urlImage, false);
+              message.message, message.userSender.urlPicture, message.urlImage, message.userSender.messageColor,false);
         }
-        console.log(auth.currentUser);
-        /*Notification.requestPermission().then((permission) => {
+        console.log(windowFocus);
+        console.log(windowBlur);
+
+        if (windowFocus < windowBlur ) {
+          Notification.requestPermission().then((permission) => {
           // Si l'utilisateur accepte, créons une notification
-          if (permission === 'granted') {
-            const notification = new Notification(message.userSender.username)
-          }
-        })*/
+            if (permission === 'granted') {
+              const notification = new Notification(message.userSender.username + ' a envoyé ' + message.message);
+              notification.addEventListener('click', function (){
+                  window.focus();
+              })
+            }
+          })
+        }
       }
     });
   });
@@ -642,7 +674,7 @@ function createAndInsertMessage(id, timestamp) {
   messageInputElement.focus();
 }*/
 
-function displayMessage(id, timestamp, name, text, picUrl, imageUrl, isAuthor) {
+function displayMessage(id, timestamp, name, text, picUrl, imageUrl, messageColor, isAuthor) {
 
     let div = document.getElementById(id) || createAndInsertMessage(id, timestamp);
 
@@ -652,7 +684,7 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl, isAuthor) {
     }
     else {
         //div.querySelector('.pp').src = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
-        div.querySelector('.pp').src = "../public/images/profil_picture.png";
+        div.querySelector('.pp').src = "../images/profil_picture.png";
     }
 
     // Nom d'utilisateur
@@ -663,6 +695,7 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl, isAuthor) {
 
     //Texte
     let texte = div.querySelector('.text');
+    texte.style.backgroundColor = messageColor;
 
     let image  = div.querySelector('.img');
 
@@ -753,6 +786,15 @@ const auth = getAuth(app);
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
+        loadMessages();
+        var pseudo;
+        const queryPseudo = query(collection(getFirestore(), 'users'), where("uid", "==", getAuth().currentUser.uid));
+        onSnapshot(queryPseudo, function(snapshot) {
+            snapshot.docChanges().forEach(function(change) {
+                pseudo = change.doc.data().username;
+                console.log(change.doc.data().username);
+            });
+        });
         document.getElementById('index').style.display = "none";
         document.getElementById('inscription').style.display = "none";
         document.getElementById('connecter').style.display = "block";
@@ -766,4 +808,3 @@ onAuthStateChanged(auth, (user) => {
 // TODO 12: Initialize Firebase Performance Monitoring
 
 initFirebaseAuth();
-loadMessages();

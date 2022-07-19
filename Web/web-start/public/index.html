@@ -43,6 +43,7 @@
   <!-- App Styling -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="styles/main.css">
 
 </head>
@@ -145,7 +146,7 @@
   <div class="container top">
     <div>
       <img class="logo" src="images/logo.png" alt="Logo de l'application">
-      <img id="A" class="profil-picture" src="images/profil_picture.png" alt="Photo de profil de l'utilisateur">
+      <img id="A" class="profil-picture"  alt="Photo de profil de l'utilisateur">
     </div>
     <div>
       <label class="mdc-text-field mdc-text-field--filled">
@@ -164,7 +165,7 @@
       </label>
     </div>
     <div>
-      <p><strong>Pseudo:</strong> Utilisateur</p>
+      <p id="pseudo-change"><strong>Pseudo : </strong></p>
     </div>
   </div>
   <div class="container bottom">
@@ -262,7 +263,7 @@
   </div>
 </div>
 <div id="chat">
-  <header class="mdc-top-app-bar">
+  <header class="mdc-top-app-bar" id="header-chat">
     <div class="mdc-top-app-bar__row">
       <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
         <button id="chat-to-connecter" class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Open navigation menu">arrow_back</button>
@@ -282,21 +283,26 @@
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
           <div id="messages">
           </div>
-          <form id="message-form" action="#">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="text" id="message" autocomplete="off">
-              <label class="mdl-textfield__label" for="message">Message...</label>
-            </div>
-            <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-              Send
-            </button>
-          </form>
-          <form id="image-form" action="#">
-            <input id="mediaCapture" type="file" accept="image/*" capture="camera" style="display: none;">
-            <button id="submitImage" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
-              <i class="material-icons">image</i>
-            </button>
-          </form>
+          <div class="form">
+            <form id="image-form" action="#">
+              <label class="material-symbols-outlined plus" for="mediaCapture">
+                add_circle
+              </label>
+              <input id="mediaCapture" type="file" accept="image/*" capture="camera" style="display: none;">
+              <button id="submitImage" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white" style="display: none">
+                <i class="material-icons">image</i>
+              </button>
+            </form>
+            <form id="message-form" action="#">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="message" autocomplete="off">
+                <label class="mdl-textfield__label" for="message">Composer votre message</label>
+              </div>
+              <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                ENVOYER
+              </button>
+            </form>
+          </div>
         </div>
       </div>
 

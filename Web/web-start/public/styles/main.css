@@ -17,6 +17,10 @@
   margin: 0;
 }
 
+#header-chat {
+  position: fixed !important;
+}
+
 body {
   /*overflow: hidden;*/
 }
@@ -81,8 +85,8 @@ body {
 }
 
 .mdc-top-app-bar {
-  position: relative !important;
   background-color: var(--button-color) !important;
+  position: relative !important;
 }
 
 .bottom label{
@@ -134,6 +138,10 @@ body {
   margin: 0px !important;
 }
 
+#messages {
+  margin-bottom: 134px;
+}
+
 .message {
   max-width: 33%;
 }
@@ -177,25 +185,19 @@ body {
   text-align: end;
 }
 
-.author .text {
-  border-radius: 10px;
-  padding: 10px;
-  background-color: rgb(255 160 0);
-}
-
 .author .date {
   text-align: end;
 }
 
-.not-author .text {
+.text {
   border-radius: 10px;
   padding: 10px;
-  background-color: rgb(235 203 148);
 }
 
 .delete {
   margin-top: 20px;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 #index {
@@ -224,4 +226,34 @@ body {
 
 #chat {
   display: none;
+}
+.plus {
+   font-variation-settings:
+           'FILL' 1,
+           'wght' 400,
+           'GRAD' 0,
+           'opsz' 48;
+   color : var(--button-chat-color);
+ }
+
+.form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  z-index: 10000;
+  width: 100%;
+  background-color: white;
+}
+
+#image-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+#submit {
+  margin-left: 20px;
 }
