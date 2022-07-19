@@ -17,6 +17,10 @@
   margin: 0;
 }
 
+body {
+  /*overflow: hidden;*/
+}
+
 .container {
   width: 100%;
   display: flex;
@@ -99,4 +103,125 @@
 
 .mdc-text-field__input {
   caret-color: #039BE5 !important;
+}
+
+.top-bar {
+  background-color: #90e0ef;
+  height: 50px !important;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mdl-layout__content {
+  height: 100%;
+  max-height: 100%;
+  width: 100%;
+  max-width: 100%;
+}
+
+#messages-card-container {
+  padding: 0px !important;
+  margin: 0px !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+#messages-card {
+  width: 100%;
+  max-width: 100%;
+  margin: 0px !important;
+}
+
+.message {
+  max-width: 33%;
+}
+
+.message img {
+  max-width: 100%;
+}
+
+.pic img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.mdl-card__supporting-text {
+  width: 100%;
+  padding: 0px;
+}
+
+.message-container {
+  margin: 20px 0px 10px 10px;
+  margin-bottom: 0px;
+  display: flex;
+  flex-direction: row;
+}
+
+.author {
+  flex-direction: row-reverse !important;
+}
+
+.pic {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.message {
+  margin-top: 10px;
+}
+
+.name {
+  text-align: end;
+}
+
+.author .text {
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgb(255 160 0);
+}
+
+.author .date {
+  text-align: end;
+}
+
+.not-author .text {
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgb(235 203 148);
+}
+
+.delete {
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+#index {
+  display: none;
+}
+
+#connecter {
+  display: none;
+}
+
+#inscription {
+  display: none;
+}
+
+#connexion {
+  display: none;
+}
+
+#oublie {
+  display: none;
+}
+
+#profil {
+  display: none;
+}
+
+#chat {
+  display: none;
 }

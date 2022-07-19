@@ -25,6 +25,8 @@ import {
     signInWithPopup,
     sendPasswordResetEmail,
     signOut,
+    updateEmail,
+    updatePassword,
 } from 'firebase/auth';
 import {
     getFirestore,
@@ -52,15 +54,83 @@ import { getPerformance } from 'firebase/performance';
 
 import { getFirebaseConfig } from './firebase-config.js';
 
-/*
+// Boutons de la page index
+document.getElementById('bouton-connexion').addEventListener('click', function() {
+    document.getElementById('index').style.display = "none";
+    document.getElementById('connexion').style.display = "block";
+});
+
+document.getElementById('bouton-s-inscrire').addEventListener('click', function() {
+    document.getElementById('index').style.display = "none";
+    document.getElementById('inscription').style.display = "block";
+});
+
+document.getElementById('bouton-discuter-sur-le-chat').addEventListener('click', function() {
+    alert("Vous devez être connecter pour discuter sur le chat.");
+});
+
+// Boutons de la page connexion
+document.getElementById('connexion-to-index').addEventListener('click', function() {
+    document.getElementById('connexion').style.display = "none";
+    document.getElementById('index').style.display = "block";
+});
 
 document.getElementById('sign-in').addEventListener('click', signIn);
-document.getElementById('sign-up').addEventListener('click', signUp);
-document.getElementById('reset-password').addEventListener('click', resetPassword);
+
+document.getElementById('connexion-to-forgot').addEventListener('click', function() {
+    document.getElementById('connexion').style.display = "none";
+    document.getElementById('oublie').style.display = "block";
+});
+
+// Boutons de la page oublié
+document.getElementById('oublie-to-connexion').addEventListener('click', function() {
+    document.getElementById('oublie').style.display = "none";
+    document.getElementById('connexion').style.display = "block";
+});
+
+document.getElementById('bouton-forget').addEventListener('click', resetPassword);
+
+// Boutons de la page connecter
+document.getElementById('connecter-to-profil').addEventListener('click', function() {
+    document.getElementById('connecter').style.display = "none";
+
+    document.getElementById('email-change').value = auth.currentUser.email;
+    document.getElementById('profil').style.display = "block";
+});
+
+document.getElementById('connecter-to-chat').addEventListener('click', function() {
+    document.getElementById('connecter').style.display = "none";
+    document.getElementById('chat').style.display = "block";
+});
+
+// Boutons de la page profil
+document.getElementById('profil-to-connecter').addEventListener('click', function() {
+    document.getElementById('profil').style.display = "none";
+    document.getElementById('connecter').style.display = "block";
+});
+
+document.getElementById('update-profil').addEventListener('click', udpateUserPorfil);
+
+document.getElementById('sign-out').addEventListener('click', signOutUser);
+
 document.getElementById('delete-user').addEventListener('click', deleteUser);
 
+// Boutons de la page inscription
+document.getElementById('inscription-to-index').addEventListener('click', function() {
+    document.getElementById('inscription').style.display = "none";
+    document.getElementById('index').style.display = "block";
+});
+
+document.getElementById('sign-up').addEventListener('click', signUp);
+
+// Boutons de la page chat
+document.getElementById('chat-to-connecter').addEventListener('click', function() {
+    document.getElementById('chat').style.display = "none";
+    document.getElementById('connecter').style.display = "block";
+});
+
 function signUp() {
-    let usernameCreate = document.getElementById('username-create').value;
+    let usernameCreate = document.getElementById('pseudo-create').value;
     let email = document.getElementById('email-create').value;
     let password = document.getElementById('password-create').value;
 
@@ -81,25 +151,28 @@ function signUp() {
             }
         })
         .catch((error) => {
+            if (error.code == "auth/weak-password") {
+                alert("Mot de passe trop faible.")
+            }
+
             const errorCode = error.code;
             const errorMessage = error.message;
             // ..
         });
-}*/
+}
 
 // Signs-in Friendly Chat.
 async function signIn() {
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
+    let email = document.getElementById('email-connect').value;
+    let password = document.getElementById('password-connect').value;
 
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
             console.log(user);
-            console.log('#'+(Math.random()*0xFFFFFF<<0).toString(16));
-            console.log("TEST");
-            location.href = 'connecter.html';
+            document.getElementById('connexion').style.display = "none";
+            document.getElementById('connecter').style.display = "block";
             // ...
         })
         .catch((error) => {
@@ -108,12 +181,21 @@ async function signIn() {
             const errorMessage = error.message;
             // ..
         });
-}/*
+}
 
 function resetPassword() {
-  sendPasswordResetEmail(getAuth(), getAuth().currentUser.email).then(function () {
+    let email = document.getElementById('email-forgot').value;
+  sendPasswordResetEmail(getAuth(), email).then(function () {
+      document.getElementById('oublie').style.display = "none";
+      document.getElementById('connexion').style.display = "block";
+      alert("Un mail vous a était envoyé a l'adresse : " + email + " veuillez vérifier vos spams." );
+  }).catch((error) => {
+      console.log("ERREUR");
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
   });
-}*/
+}
 
 function deleteUser() {
   const userQuery = query(collection(getFirestore(), 'users'));
@@ -133,7 +215,34 @@ function deleteUser() {
 function signOutUser() {
   // Sign out of Firebase.
   signOut(getAuth());
-    location.href = 'connecter.html';
+    document.getElementById('profil').style.display = "none";
+    document.getElementById('index').style.display = "block";
+}
+
+//Fonction update profil
+function udpateUserPorfil() {
+    let email = document.getElementById('email-change').value;
+    let password = document.getElementById('password-change').value;
+    console.log(password=='');
+
+    let auth = getAuth();
+
+    updateEmail(auth.currentUser, email).then(() => {
+        alert("Adresse mail mise à jour.");
+
+        if (password!='') {
+            updatePassword(auth.currentUser, password).then(() => {
+                alert("Mot de passe mis à jour.");
+            }).catch((error) => {
+                // An error ocurred
+                // ...
+            });
+        }
+    }).catch((error) => {
+        console.log(error);
+        // An error occurred
+        // ...
+    });
 }
 
 // Initiate firebase auth
@@ -150,7 +259,7 @@ function initFirebaseAuth() {
           // ...
       }
   });
-}/*
+}
 
 // Returns the signed-in user's profile Pic URL.
 function getProfilePicUrl() {
@@ -206,13 +315,20 @@ function loadMessages() {
         deleteMessage(change.doc.id);
       } else {
         var message = change.doc.data();
-        if (change.doc.data().userSender.uid == getAuth().lastNotifiedUid){
+        if (change.doc.data().userSender.uid === getAuth().lastNotifiedUid){
           displayMessage(change.doc.id, message.dateCreated, message.userSender.username,
               message.message, message.userSender.urlPicture, message.urlImage, true);
         } else {
           displayMessage(change.doc.id, message.dateCreated, message.userSender.username,
               message.message, message.userSender.urlPicture, message.urlImage, false);
         }
+        console.log(auth.currentUser);
+        /*Notification.requestPermission().then((permission) => {
+          // Si l'utilisateur accepte, créons une notification
+          if (permission === 'granted') {
+            const notification = new Notification(message.userSender.username)
+          }
+        })*/
       }
     });
   });
@@ -367,13 +483,11 @@ function resetMaterialTextfield(element) {
   element.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 }
 
-// Template for messages.
 var MESSAGE_TEMPLATE =
-  '<div class="message-container">' +
-  '<div class="spacing"><div class="pic"></div></div>' +
-  '<div class="message"></div>' +
-  '<div class="name"></div>' +
-  '</div>';
+    '<div class="message-container">' +
+    '<div class="pic"><img class="pp"></div>' +
+    '<div class="message"><div class="text"></div><img class="img"><div class="name"></div><div class="time"></div></div>' +
+    '</div>';
 
 // Adds a size to Google Profile pics URLs.
 function addSizeToGoogleProfilePic(url) {
@@ -437,22 +551,26 @@ function createAndInsertMessage(id, timestamp) {
 }
 
 // Displays a Message in the UI.
-function displayMessage(id, timestamp, name, text, picUrl, imageUrl, isAuthor) {
-  var div =
-    document.getElementById(id) || createAndInsertMessage(id, timestamp);
+/*function displayMessage(id, timestamp, name, text, picUrl, imageUrl, isAuthor) {
+  let div = document.getElementById(id) || createAndInsertMessage(id, timestamp);
 
   // profile picture
+  var pp = document.createElement('img');
   if (picUrl) {
-    div.querySelector('.pic').style.backgroundImage =
-      'url(' + addSizeToGoogleProfilePic(picUrl) + ')';
+    pp.src = picUrl;
+    div.querySelector('.pic').appendChild(pp);
+  }
+  else {
+      pp.src = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+      div.querySelector('.pic').appendChild(pp);
   }
 
   div.querySelector('.name').textContent = name;
-  var messageElement = div.querySelector('.message');
+    let messageElement = div.querySelector('.message');
 
-  if (isAuthor) {
+    if (isAuthor) {
     if (text && imageUrl) {
-      var image = document.createElement('img');
+      let image = document.createElement('img');
       image.addEventListener('load', function () {
         messageListElement.scrollTop = messageListElement.scrollHeight;
       });
@@ -477,7 +595,6 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl, isAuthor) {
       });
       messageElement.appendChild(crossDelete);
     } else if (imageUrl) {
-      var image = document.createElement('img');
       image.addEventListener('load', function () {
         messageListElement.scrollTop = messageListElement.scrollHeight;
       });
@@ -493,6 +610,7 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl, isAuthor) {
     }
   } else {
     if (text && imageUrl) {
+        messageElement.appendChild(pp);
       var image = document.createElement('img');
       image.addEventListener('load', function () {
         messageListElement.scrollTop = messageListElement.scrollHeight;
@@ -522,6 +640,71 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl, isAuthor) {
   }, 1);
   messageListElement.scrollTop = messageListElement.scrollHeight;
   messageInputElement.focus();
+}*/
+
+function displayMessage(id, timestamp, name, text, picUrl, imageUrl, isAuthor) {
+
+    let div = document.getElementById(id) || createAndInsertMessage(id, timestamp);
+
+    // Image de profil
+    if (picUrl) {
+        div.querySelector('.pp').src = picUrl;
+    }
+    else {
+        //div.querySelector('.pp').src = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+        div.querySelector('.pp').src = "../public/images/profil_picture.png";
+    }
+
+    // Nom d'utilisateur
+    div.querySelector('.name').textContent = name;
+
+    // Date
+    div.querySelector('.time').textContent = timestamp.toDate().toLocaleDateString('fr')+' '+timestamp.toDate().getHours()+':'+timestamp.toDate().getMinutes();
+
+    //Texte
+    let texte = div.querySelector('.text');
+
+    let image  = div.querySelector('.img');
+
+    if (isAuthor) {
+        div.classList.add('author');
+        if (text && imageUrl) {
+            image.src = imageUrl;
+            texte.textContent = text;
+        } else if (text) {
+            image.style.display = 'none';
+            texte.textContent = text;
+        } else if (imageUrl) {
+            texte.style.display = 'none';
+            image.src = imageUrl;
+        }
+        var crossDelete = document.createElement('span');
+        crossDelete.classList.add("delete");
+        crossDelete.innerHTML = "❌";
+        crossDelete.addEventListener('click', function () {
+            deleteMessage(id);
+        });
+        div.appendChild(crossDelete);
+    } else {
+        div.classList.add('not-author');
+        if (text && imageUrl) {
+            image.src = imageUrl;
+            texte.textContent = text;
+        } else if (text) {
+            image.style.display = 'none';
+            texte.textContent = text;
+        } else if (imageUrl) {
+            texte.style.display = 'none';
+            image.src = imageUrl;
+        }
+    }
+
+    // Show the card fading-in and scroll to view the new message.
+    setTimeout(function () {
+        div.classList.add('visible');
+    }, 1);
+    messageListElement.scrollTop = messageListElement.scrollHeight;
+    messageInputElement.focus();
 }
 
 // Enables or disables the submit button depending on the values of the input
@@ -562,65 +745,25 @@ imageButtonElement.addEventListener('click', function (e) {
   e.preventDefault();
   mediaCaptureElement.click();
 });
-mediaCaptureElement.addEventListener('change', onMediaFileSelected);*/
+mediaCaptureElement.addEventListener('change', onMediaFileSelected);
 
 const firebaseAppConfig = getFirebaseConfig();
 const app = initializeApp(firebaseAppConfig);
 const auth = getAuth(app);
 
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        document.getElementById('index').style.display = "none";
+        document.getElementById('inscription').style.display = "none";
+        document.getElementById('connecter').style.display = "block";
+    } else {
+        document.getElementById('connecter').style.display = "none";
+        document.getElementById('profil').style.display = "none";
+        document.getElementById('index').style.display = "block";
+    }
+});
+
 // TODO 12: Initialize Firebase Performance Monitoring
 
 initFirebaseAuth();
-//loadMessages();
-
-// Permet de récuperer le titre du DOCUMENT
-const titre = document.location.pathname.split('/')[3];
-switch (titre) {
-    case 'index.html':
-        document.getElementById('bouton-connexion').addEventListener('click', function() {
-            location.href = 'connexion.html';
-        });
-        document.getElementById('bouton-s-inscrire').addEventListener('click', function() {
-            // Pas encore fait --> location.href = "inscription.html";
-        });
-        document.getElementById('bouton-discuter-sur-le-chat').addEventListener('click', function() {
-            alert('Vous devez vous connectez pour accéder au tchat');
-        });
-
-        console.log(`C'est la page ${titre}`);
-        break;
-
-    case 'connexion.html':
-        document.getElementById('bouton-connexion').addEventListener('click', signIn);
-
-        console.log(`C'est la page ${titre}`);
-        break;
-
-    case 'connecter.html':
-        document.getElementById('bouton-afficher-le-profil').addEventListener('click', function() {
-            location.href = 'compte.html';
-        });
-
-        document.getElementById('bouton-discuter-sur-le-chat').addEventListener('click', function() {
-            // Pas encore fait --> location.href = 'chat.html';
-        });
-
-        console.log(`C'est la page ${titre}`);
-        break;
-
-    case 'compte.html':
-        console.log(getAuth().currentUser.email);
-        //document.getElementById('email').innerText = getAuth().currentUser.email
-
-        // Pas encore fait --> document.getElementById('bouton-mettre-a-jour').addEventListener('click', signIn);
-
-        document.getElementById('bouton-deconnexion').addEventListener('click', signOutUser);
-
-        document.getElementById('bouton-supprimer-mon-compte').addEventListener('click', deleteUser);
-
-        console.log(`C'est la page ${titre}`);
-        break;
-
-    default:
-        console.log(`ERREUR ${titre} n'as pas de JS associer`);
-}
+loadMessages();

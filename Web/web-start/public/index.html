@@ -42,31 +42,271 @@
 
   <!-- App Styling -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="styles/main.css">
 
 </head>
 <body>
-<div class="container top">
-  <img class="logo" src="images/logo.png" alt="Logo de l'application"><br>
-  <h1>Projet DSN</h1><br>
-  <p>Discute sur le chat, tout simplement.</p><br>
+<div id="index">
+  <div class="container top">
+    <img class="logo" src="images/logo.png" alt="Logo de l'application"><br>
+    <h1>Projet DSN</h1><br>
+    <p>Discute sur le chat, tout simplement.</p><br>
+  </div>
+  <div class="container bottom">
+    <div>
+      <button id="bouton-connexion" class="mdc-button mdc-button--raised">
+        <span class="mdc-button__label">CONNEXION</span>
+      </button>
+    </div>
+    <div>
+      <button id="bouton-s-inscrire" class="mdc-button mdc-button--raised default-button">
+        <span class="mdc-button__label">S'INSCRIRE</span>
+      </button>
+    </div>
+    <div>
+      <button id="bouton-discuter-sur-le-chat" class="mdc-button mdc-button--raised chat-button">
+        <span class="mdc-button__label">DISCUTER SUR LE CHAT</span>
+      </button>
+    </div>
+  </div>
 </div>
-<div class="container bottom">
-  <div>
-    <button id="bouton-connexion" class="mdc-button mdc-button--raised">
-      <span class="mdc-button__label">CONNEXION</span>
-    </button>
+<div id="connexion">
+  <header class="mdc-top-app-bar">
+    <div class="mdc-top-app-bar__row">
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <button id="connexion-to-index" class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Open navigation menu">arrow_back</button>
+        <span class="mdc-top-app-bar__title">Connexion</span>
+      </section>
+    </div>
+  </header>
+  <div class="container top">
+    <img class="logo" src="images/logo.png" alt="Logo de l'application"><br>
+    <h1>Projet DSN</h1><br>
+    <p>Connexion</p><br>
   </div>
-  <div>
-    <button id="bouton-s-inscrire" class="mdc-button mdc-button--raised default-button">
-      <span class="mdc-button__label">S'INSCRIRE</span>
-    </button>
+  <div class="container bottom">
+    <div>
+      <label class="mdc-text-field mdc-text-field--filled">
+        <span class="mdc-text-field__ripple"></span>
+        <span class="mdc-floating-label">Adresse email</span>
+        <input id="email-connect" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+        <span class="mdc-line-ripple"></span>
+      </label>
+    </div>
+    <div>
+      <label class="mdc-text-field mdc-text-field--filled">
+        <span class="mdc-text-field__ripple"></span>
+        <span class="mdc-floating-label">Mot de passe</span>
+        <input id="password-connect" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+        <span class="mdc-line-ripple"></span>
+      </label>
+    </div>
+    <div>
+      <button id="sign-in" class="mdc-button mdc-button--raised default-button">
+        <span class="mdc-button__label">CONNEXION</span>
+      </button>
+    </div>
+    <div>
+      <button id="connexion-to-forgot" class="mdc-button mdc-button--raised chat-button">
+        <span class="mdc-button__label">MOT DE PASSE OUBLIÉ ?</span>
+      </button>
+    </div>
   </div>
-  <div>
-    <button id="bouton-discuter-sur-le-chat" class="mdc-button mdc-button--raised chat-button">
-      <span class="mdc-button__label">DISCUTER SUR LE CHAT</span>
-    </button>
+</div>
+<div id="connecter">
+  <div class="container top">
+    <img class="logo" src="images/logo.png" alt="Logo de l'application"><br>
+    <h1>Projet DSN</h1><br>
+    <p>Discuter sur le chat, tout simplement.</p><br>
   </div>
+  <div class="container bottom">
+    <div>
+      <button id="connecter-to-profil" class="mdc-button mdc-button--raised default-button">
+        <span class="mdc-button__label">AFFICHER LE PROFIL</span>
+      </button>
+    </div>
+    <div>
+      <button id="connecter-to-chat" class="mdc-button mdc-button--raised chat-button">
+        <span class="mdc-button__label">DISCUTER SUR LE CHAT</span>
+      </button>
+    </div>
+  </div>
+</div>
+<div id="profil">
+  <header class="mdc-top-app-bar">
+    <div class="mdc-top-app-bar__row">
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <button id="profil-to-connecter" class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Open navigation menu">arrow_back</button>
+        <span class="mdc-top-app-bar__title">Votre profil</span>
+      </section>
+    </div>
+  </header>
+  <div class="container top">
+    <div>
+      <img class="logo" src="images/logo.png" alt="Logo de l'application">
+      <img id="A" class="profil-picture" src="images/profil_picture.png" alt="Photo de profil de l'utilisateur">
+    </div>
+    <div>
+      <label class="mdc-text-field mdc-text-field--filled">
+        <span class="mdc-text-field__ripple"></span>
+        <span class="mdc-floating-label">Adresse email</span>
+        <input id="email-change" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+        <span class="mdc-line-ripple"></span>
+      </label>
+    </div>
+    <div>
+      <label class="mdc-text-field mdc-text-field--filled">
+        <span class="mdc-text-field__ripple"></span>
+        <span class="mdc-floating-label">Mot de passe</span>
+        <input id="password-change" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+        <span class="mdc-line-ripple"></span>
+      </label>
+    </div>
+    <div>
+      <p><strong>Pseudo:</strong> Utilisateur</p>
+    </div>
+  </div>
+  <div class="container bottom">
+    <div>
+      <button id="update-profil" class="mdc-button mdc-button--raised default-button">
+        <span class="mdc-button__label">METTRE À JOUR</span>
+      </button>
+    </div>
+    <div>
+      <button id="sign-out" class="mdc-button mdc-button--raised chat-button">
+        <span class="mdc-button__label">DÉCONNEXION</span>
+      </button>
+    </div>
+    <div>
+      <button id="delete-user" class="mdc-button mdc-button--raised red-button delete-button">
+        <span class="mdc-button__label">SUPPRIMER MON COMPTE</span>
+      </button>
+    </div>
+  </div>
+</div>
+<div id="inscription">
+  <header class="mdc-top-app-bar">
+    <div class="mdc-top-app-bar__row">
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <button id="inscription-to-index" class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Open navigation menu">arrow_back</button>
+        <span class="mdc-top-app-bar__title">Inscription</span>
+      </section>
+    </div>
+  </header>
+  <div class="container top">
+    <img class="logo" src="images/logo.png" alt="Logo de l'application"><br>
+    <h1>Projet DSN</h1><br>
+    <p>Discute sur le chat, tout simplement.</p><br>
+  </div>
+  <div class="container bottom">
+    <div>
+      <label class="mdc-text-field mdc-text-field--filled">
+        <span class="mdc-text-field__ripple"></span>
+        <span class="mdc-floating-label">Adresse email</span>
+        <input id="email-create" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+        <span class="mdc-line-ripple"></span>
+      </label>
+    </div>
+    <div>
+      <label class="mdc-text-field mdc-text-field--filled">
+        <span class="mdc-text-field__ripple"></span>
+        <span class="mdc-floating-label">Pseudo</span>
+        <input id="pseudo-create" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+        <span class="mdc-line-ripple"></span>
+      </label>
+    </div>
+    <div>
+      <label class="mdc-text-field mdc-text-field--filled">
+        <span class="mdc-text-field__ripple"></span>
+        <span class="mdc-floating-label">Mot de passe</span>
+        <input id="password-create" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+        <span class="mdc-line-ripple"></span>
+      </label>
+    </div>
+    <div>
+      <button id="sign-up" class="mdc-button mdc-button--raised default-button">
+        <span class="mdc-button__label">S'INSCRIRE</span>
+      </button>
+    </div>
+  </div>
+</div>
+<div id="oublie">
+  <header class="mdc-top-app-bar">
+    <div class="mdc-top-app-bar__row">
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <button id="oublie-to-connexion" class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Open navigation menu">arrow_back</button>
+        <span class="mdc-top-app-bar__title">Mot de passe oublié</span>
+      </section>
+    </div>
+  </header>
+  <div class="container top">
+    <img class="logo" src="images/logo.png" alt="Logo de l'application"><br>
+    <h1>Projet DSN</h1><br>
+    <p>Mot de passe oublié</p><br>
+  </div>
+  <div class="container bottom">
+    <div>
+      <label class="mdc-text-field mdc-text-field--filled">
+        <span class="mdc-text-field__ripple"></span>
+        <span class="mdc-floating-label">Adresse email</span>
+        <input id="email-forgot" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+        <span class="mdc-line-ripple"></span>
+      </label>
+    </div>
+    <div>
+      <button id="bouton-forget" class="mdc-button mdc-button--raised default-button">
+        <span class="mdc-button__label">CONNEXION</span>
+      </button>
+    </div>
+  </div>
+</div>
+<div id="chat">
+  <header class="mdc-top-app-bar">
+    <div class="mdc-top-app-bar__row">
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <button id="chat-to-connecter" class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Open navigation menu">arrow_back</button>
+        <span class="mdc-top-app-bar__title">Chats de discussions</span>
+      </section>
+    </div>
+    <div class="top-bar">
+      <span class="material-symbols-outlined">
+        language
+      </span>
+    </div>
+  </header>
+  <main class="mdl-layout__content mdl-color--grey-100">
+    <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
+
+      <div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--6-col-tablet mdl-cell--6-col-desktop">
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+          <div id="messages">
+          </div>
+          <form id="message-form" action="#">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="message" autocomplete="off">
+              <label class="mdl-textfield__label" for="message">Message...</label>
+            </div>
+            <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+              Send
+            </button>
+          </form>
+          <form id="image-form" action="#">
+            <input id="mediaCapture" type="file" accept="image/*" capture="camera" style="display: none;">
+            <button id="submitImage" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
+              <i class="material-icons">image</i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div id="must-signin-snackbar" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+      </div>
+
+    </div>
+  </main>
 </div>
 <script src="scripts/main.js"></script>
 </body>
