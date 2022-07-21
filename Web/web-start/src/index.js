@@ -114,7 +114,8 @@ document.getElementById('connecter-to-profil').addEventListener('click', functio
             if(change.doc.data().urlPicture) {
                 document.getElementById('A').src = change.doc.data().urlPicture;
             } else {
-                document.getElementById('A').src = "../images/profil_picture.png"
+                document.getElementById('A').src = "./images/profil_picture.png"
+
             }
         });
     });
@@ -175,6 +176,16 @@ function signUp() {
             }
         })
         .catch((error) => {
+            //pour la creation de user
+            if(error.code == 'auth/invalid-email')
+            {
+                alert('Adresse mail non valide')
+            }
+
+            if(error.code == 'auth/email-already-in-use')
+            {
+                alert('Adresse mail déja utilisé')
+            }
             if (error.code == "auth/weak-password") {
                 alert("Mot de passe trop faible.")
             }
@@ -200,7 +211,21 @@ async function signIn() {
             // ...
         })
         .catch((error) => {
-            console.log("ERREUR");
+            if(error.code == 'auth/invalid-email')
+            {
+                alert('Adresse mail non valide')
+            }
+            if(error.code == 'auth/wrong-password')
+            {
+                alert('Mauvais mot de passe / email')
+            }
+            if(error.code == 'auth/user-not-found')
+            {
+                alert('Utilisateur inexistant')
+            }
+
+
+            console.log(error.code);
             const errorCode = error.code;
             const errorMessage = error.message;
             // ..
@@ -209,36 +234,36 @@ async function signIn() {
 
 function resetPassword() {
     let email = document.getElementById('email-forgot').value;
-  sendPasswordResetEmail(getAuth(), email).then(function () {
-      document.getElementById('oublie').style.display = "none";
-      document.getElementById('connexion').style.display = "block";
-      alert("Un mail vous a était envoyé a l'adresse : " + email + " veuillez vérifier vos spams." );
-  }).catch((error) => {
-      console.log("ERREUR");
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-  });
+    sendPasswordResetEmail(getAuth(), email).then(function () {
+        document.getElementById('oublie').style.display = "none";
+        document.getElementById('connexion').style.display = "block";
+        alert("Un mail vous a était envoyé a l'adresse : " + email + " veuillez vérifier vos spams." );
+    }).catch((error) => {
+        console.log("ERREUR");
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+    });
 }
 
 function deleteUser() {
-  const userQuery = query(collection(getFirestore(), 'users'));
-  onSnapshot(userQuery, function(snapshot) {
-    snapshot.docChanges().forEach(function(change) {
-      if(change.doc.data().uid == getAuth().currentUser.uid) {
-        deleteDoc(doc(getFirestore(), 'users', getAuth().currentUser.uid)).then(function () {
-          getAuth().currentUser.delete().then(function () {
-          });
+    const userQuery = query(collection(getFirestore(), 'users'));
+    onSnapshot(userQuery, function(snapshot) {
+        snapshot.docChanges().forEach(function(change) {
+            if(change.doc.data().uid == getAuth().currentUser.uid) {
+                deleteDoc(doc(getFirestore(), 'users', getAuth().currentUser.uid)).then(function () {
+                    getAuth().currentUser.delete().then(function () {
+                    });
+                });
+            }
         });
-      }
     });
-  });
 }
 
 // Signs-out of Friendly Chat.
 function signOutUser() {
-  // Sign out of Firebase.
-  signOut(getAuth());
+    // Sign out of Firebase.
+    signOut(getAuth());
     document.getElementById('profil').style.display = "none";
     document.getElementById('index').style.display = "block";
 }
@@ -271,248 +296,248 @@ function udpateUserPorfil() {
 
 // Initiate firebase auth
 function initFirebaseAuth() {
-  // Listen to auth state changes.
-  onAuthStateChanged(getAuth(), (user) => {
-      if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-          const uid = user.uid;
-          // ...
-      } else {
-          // User is signed out
-          // ...
-      }
-  });
+    // Listen to auth state changes.
+    onAuthStateChanged(getAuth(), (user) => {
+        if (user) {
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/firebase.User
+            const uid = user.uid;
+            // ...
+        } else {
+            // User is signed out
+            // ...
+        }
+    });
 }
 
 // Returns the signed-in user's profile Pic URL.
 function getProfilePicUrl() {
-  return getAuth().currentUser.photoURL || '/images/profile_placeholder.png';
+    return getAuth().currentUser.photoURL || '/images/profile_placeholder.png';
 }
 
 // Returns the signed-in user's display name.
 function getUserName() {
-  return getAuth().currentUser.displayName;
+    return getAuth().currentUser.displayName;
 }
 
 // Returns true if a user is signed-in.
 function isUserSignedIn() {
-  return !!getAuth().currentUser;
+    return !!getAuth().currentUser;
 }
 
 // Saves a new message to Cloud Firestore.
 async function saveMessage(messageText, file) {
-  if(file==null){
-    file=null;
-  }
-  const authUser = query(collection(getFirestore(), 'users'), where("uid", "==", getAuth().currentUser.uid));
-
-  onSnapshot(authUser, async function (snapshot) {
-    for (const change of snapshot.docChanges()) {
-      try {
-        await addDoc(collection(getFirestore(), 'chats/general/messages'), {
-          dateCreated: serverTimestamp(),
-          message: messageText,
-          urlImage: file,
-          userSender: {
-            messageColor: change.doc.data().messageColor,
-            uid: change.doc.data().uid,
-            urlPicture: change.doc.data().urlPicture,
-            username: change.doc.data().username,
-          }
-        });
-      } catch (error) {
-        console.error('Error writing new message to Firebase Database', error);
-      }
+    if(file==null){
+        file=null;
     }
-  });
-  window.scrollTo(-67, document.body.scrollHeight);
+    const authUser = query(collection(getFirestore(), 'users'), where("uid", "==", getAuth().currentUser.uid));
+
+    onSnapshot(authUser, async function (snapshot) {
+        for (const change of snapshot.docChanges()) {
+            try {
+                await addDoc(collection(getFirestore(), 'chats/general/messages'), {
+                    dateCreated: serverTimestamp(),
+                    message: messageText,
+                    urlImage: file,
+                    userSender: {
+                        messageColor: change.doc.data().messageColor,
+                        uid: change.doc.data().uid,
+                        urlPicture: change.doc.data().urlPicture,
+                        username: change.doc.data().username,
+                    }
+                });
+            } catch (error) {
+                console.error('Error writing new message to Firebase Database', error);
+            }
+        }
+    });
+    window.scrollTo(-67, document.body.scrollHeight);
 }
 
 // Loads chat messages history and listens for upcoming ones.
 function loadMessages() {
-  // Create the query to load the last 12 messages and listen for new ones.
-  //const recentMessagesQuery = query(collection(getFirestore(), 'chats/general/messages'), orderBy('timestamp', 'desc'), limit(12));
-  const recentMessagesQuery = query(collection(getFirestore(), 'chats/general/messages'));
-  onSnapshot(recentMessagesQuery, function(snapshot) {
-    snapshot.docChanges().forEach(function(change) {
-      if (change.type === 'removed') {
-        deleteMessage(change.doc.id);
-      } else {
-        var message = change.doc.data();
-        if (change.doc.data().userSender.uid === getAuth().lastNotifiedUid){
-          displayMessage(change.doc.id, message.dateCreated, message.userSender.username,
-              message.message, message.userSender.urlPicture, message.urlImage, message.userSender.messageColor, true);
-        } else {
-          displayMessage(change.doc.id, message.dateCreated, message.userSender.username,
-              message.message, message.userSender.urlPicture, message.urlImage, message.userSender.messageColor,false);
-        }
-        console.log(windowFocus);
-        console.log(windowBlur);
+    // Create the query to load the last 12 messages and listen for new ones.
+    //const recentMessagesQuery = query(collection(getFirestore(), 'chats/general/messages'), orderBy('timestamp', 'desc'), limit(12));
+    const recentMessagesQuery = query(collection(getFirestore(), 'chats/general/messages'));
+    onSnapshot(recentMessagesQuery, function(snapshot) {
+        snapshot.docChanges().forEach(function(change) {
+            if (change.type === 'removed') {
+                deleteMessage(change.doc.id);
+            } else {
+                var message = change.doc.data();
+                if (change.doc.data().userSender.uid === getAuth().lastNotifiedUid){
+                    displayMessage(change.doc.id, message.dateCreated, message.userSender.username,
+                        message.message, message.userSender.urlPicture, message.urlImage, message.userSender.messageColor, true);
+                } else {
+                    displayMessage(change.doc.id, message.dateCreated, message.userSender.username,
+                        message.message, message.userSender.urlPicture, message.urlImage, message.userSender.messageColor,false);
+                }
+                console.log(windowFocus);
+                console.log(windowBlur);
 
-        if (windowFocus < windowBlur ) {
-          Notification.requestPermission().then((permission) => {
-          // Si l'utilisateur accepte, créons une notification
-            if (permission === 'granted') {
-              const notification = new Notification(message.userSender.username + ' a envoyé ' + message.message);
-              notification.addEventListener('click', function (){
-                  window.focus();
-              })
+                if (windowFocus < windowBlur ) {
+                    Notification.requestPermission().then((permission) => {
+                        // Si l'utilisateur accepte, créons une notification
+                        if (permission === 'granted') {
+                            const notification = new Notification(message.userSender.username + ' a envoyé ' + message.message);
+                            notification.addEventListener('click', function (){
+                                window.focus();
+                            })
+                        }
+                    })
+                }
             }
-          })
-        }
-      }
+        });
     });
-  });
 }
 
 // Saves a new message containing an image in Firebase.
 // This first saves the image in Firebase storage.
 async function saveImageMessage(file, messageText) {
-  if(messageText==null){
-    messageText=null;
-  }
-
-  const authUser = query(collection(getFirestore(), 'users'), where("uid", "==", getAuth().currentUser.uid));
-  onSnapshot(authUser, async function (snapshot) {
-    for (const change of snapshot.docChanges()) {
-      try {
-        // 1 - We add a message with a loading icon that will get updated with the shared image.
-        const messageRef = await addDoc(collection(getFirestore(), 'chats/general/messages'), {
-          dateCreated: serverTimestamp(),
-          message: messageText,
-          urlImage: LOADING_IMAGE_URL,
-          userSender: {
-            messageColor: change.doc.data().messageColor,
-            uid: change.doc.data().uid,
-            urlPicture: change.doc.data().urlPicture,
-            username: change.doc.data().username,
-          }
-        });
-
-        // 2 - Upload the image to Cloud Storage.
-        const filePath = `${getAuth().currentUser.uid}/${messageRef.id}/${file.name}`;
-        const newImageRef = ref(getStorage(), filePath);
-        const fileSnapshot = await uploadBytesResumable(newImageRef, file);
-
-        // 3 - Generate a public URL for the file.
-        const publicImageUrl = await getDownloadURL(newImageRef);
-        console.log(publicImageUrl);
-        console.log(messageRef);
-
-        // 4 - Update the chat message placeholder with the image's URL.
-        await updateDoc(messageRef, {
-          urlImage: publicImageUrl,
-        });
-      } catch (error) {
-        console.error('There was an error uploading a file to Cloud Storage:', error);
-      }
+    if(messageText==null){
+        messageText=null;
     }
-  });
+
+    const authUser = query(collection(getFirestore(), 'users'), where("uid", "==", getAuth().currentUser.uid));
+    onSnapshot(authUser, async function (snapshot) {
+        for (const change of snapshot.docChanges()) {
+            try {
+                // 1 - We add a message with a loading icon that will get updated with the shared image.
+                const messageRef = await addDoc(collection(getFirestore(), 'chats/general/messages'), {
+                    dateCreated: serverTimestamp(),
+                    message: messageText,
+                    urlImage: LOADING_IMAGE_URL,
+                    userSender: {
+                        messageColor: change.doc.data().messageColor,
+                        uid: change.doc.data().uid,
+                        urlPicture: change.doc.data().urlPicture,
+                        username: change.doc.data().username,
+                    }
+                });
+
+                // 2 - Upload the image to Cloud Storage.
+                const filePath = `${getAuth().currentUser.uid}/${messageRef.id}/${file.name}`;
+                const newImageRef = ref(getStorage(), filePath);
+                const fileSnapshot = await uploadBytesResumable(newImageRef, file);
+
+                // 3 - Generate a public URL for the file.
+                const publicImageUrl = await getDownloadURL(newImageRef);
+                console.log(publicImageUrl);
+                console.log(messageRef);
+
+                // 4 - Update the chat message placeholder with the image's URL.
+                await updateDoc(messageRef, {
+                    urlImage: publicImageUrl,
+                });
+            } catch (error) {
+                console.error('There was an error uploading a file to Cloud Storage:', error);
+            }
+        }
+    });
 
 }
 
 // Saves the messaging device token to Cloud Firestore.
 async function saveMessagingDeviceToken() {
-  // TODO 10: Save the device token in Cloud Firestore
+    // TODO 10: Save the device token in Cloud Firestore
 }
 
 // Requests permissions to show notifications.
 async function requestNotificationsPermissions() {
-  // TODO 11: Request permissions to send notifications.
+    // TODO 11: Request permissions to send notifications.
 }
 
 // Triggered when a file is selected via the media picker.
 function onMediaFileSelected(event) {
-  event.preventDefault();
-  var file = event.target.files[0];
+    event.preventDefault();
+    var file = event.target.files[0];
 
-  // Clear the selection in the file picker input.
-  imageFormElement.reset();
+    // Clear the selection in the file picker input.
+    imageFormElement.reset();
 
-  // Check if the file is an image.
-  if (!file.type.match('image.*')) {
-    var data = {
-      message: 'You can only share images',
-      timeout: 2000,
-    };
-    signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
-    return;
-  }
-  // Check if the user is signed-in
-  if (checkSignedInWithMessage()) {
-    saveImageMessage(file);
-  }
+    // Check if the file is an image.
+    if (!file.type.match('image.*')) {
+        var data = {
+            message: 'You can only share images',
+            timeout: 2000,
+        };
+        signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
+        return;
+    }
+    // Check if the user is signed-in
+    if (checkSignedInWithMessage()) {
+        saveImageMessage(file);
+    }
 }
 
 // Triggered when the send new message form is submitted.
 function onMessageFormSubmit(e) {
-  e.preventDefault();
-  // Check that the user entered a message and is signed in.
-  if (messageInputElement.value && checkSignedInWithMessage()) {
-    saveMessage(messageInputElement.value).then(function () {
-      // Clear message text field and re-enable the SEND button.
-      resetMaterialTextfield(messageInputElement);
-      toggleButton();
-    });
-  }
+    e.preventDefault();
+    // Check that the user entered a message and is signed in.
+    if (messageInputElement.value && checkSignedInWithMessage()) {
+        saveMessage(messageInputElement.value).then(function () {
+            // Clear message text field and re-enable the SEND button.
+            resetMaterialTextfield(messageInputElement);
+            toggleButton();
+        });
+    }
 }
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 function authStateObserver(user) {
-  if (user) {
-    // User is signed in!
-    // Get the signed-in user's profile pic and name.
-    var profilePicUrl = getProfilePicUrl();
-    var userName = getUserName();
+    if (user) {
+        // User is signed in!
+        // Get the signed-in user's profile pic and name.
+        var profilePicUrl = getProfilePicUrl();
+        var userName = getUserName();
 
-    // Set the user's profile pic and name.
-    userPicElement.style.backgroundImage =
-      'url(' + addSizeToGoogleProfilePic(profilePicUrl) + ')';
-    userNameElement.textContent = userName;
+        // Set the user's profile pic and name.
+        userPicElement.style.backgroundImage =
+            'url(' + addSizeToGoogleProfilePic(profilePicUrl) + ')';
+        userNameElement.textContent = userName;
 
-    // Show user's profile and sign-out button.
-    userNameElement.removeAttribute('hidden');
-    userPicElement.removeAttribute('hidden');
-    signOutButtonElement.removeAttribute('hidden');
+        // Show user's profile and sign-out button.
+        userNameElement.removeAttribute('hidden');
+        userPicElement.removeAttribute('hidden');
+        signOutButtonElement.removeAttribute('hidden');
 
-    // Hide sign-in button.
-    signInButtonElement.setAttribute('hidden', 'true');
+        // Hide sign-in button.
+        signInButtonElement.setAttribute('hidden', 'true');
 
-    // We save the Firebase Messaging Device token and enable notifications.
-    saveMessagingDeviceToken();
-  } else {
-    // User is signed out!
-    // Hide user's profile and sign-out button.
-    userNameElement.setAttribute('hidden', 'true');
-    userPicElement.setAttribute('hidden', 'true');
-    signOutButtonElement.setAttribute('hidden', 'true');
+        // We save the Firebase Messaging Device token and enable notifications.
+        saveMessagingDeviceToken();
+    } else {
+        // User is signed out!
+        // Hide user's profile and sign-out button.
+        userNameElement.setAttribute('hidden', 'true');
+        userPicElement.setAttribute('hidden', 'true');
+        signOutButtonElement.setAttribute('hidden', 'true');
 
-    // Show sign-in button.
-    signInButtonElement.removeAttribute('hidden');
-  }
+        // Show sign-in button.
+        signInButtonElement.removeAttribute('hidden');
+    }
 }
 
 // Returns true if user is signed-in. Otherwise false and displays a message.
 function checkSignedInWithMessage() {
-  // Return true if the user is signed in Firebase
-  if (isUserSignedIn()) {
-    return true;
-  }
+    // Return true if the user is signed in Firebase
+    if (isUserSignedIn()) {
+        return true;
+    }
 
-  // Display a message to the user using a Toast.
-  var data = {
-    message: 'You must sign-in first',
-    timeout: 2000,
-  };
-  signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
-  return false;
+    // Display a message to the user using a Toast.
+    var data = {
+        message: 'You must sign-in first',
+        timeout: 2000,
+    };
+    signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
+    return false;
 }
 
 // Resets the given MaterialTextField.
 function resetMaterialTextfield(element) {
-  element.value = '';
-  element.parentNode.MaterialTextfield.boundUpdateClassesHandler();
+    element.value = '';
+    element.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 }
 
 var MESSAGE_TEMPLATE =
@@ -523,10 +548,10 @@ var MESSAGE_TEMPLATE =
 
 // Adds a size to Google Profile pics URLs.
 function addSizeToGoogleProfilePic(url) {
-  if (url.indexOf('googleusercontent.com') !== -1 && url.indexOf('?') === -1) {
-    return url + '?sz=150';
-  }
-  return url;
+    if (url.indexOf('googleusercontent.com') !== -1 && url.indexOf('?') === -1) {
+        return url + '?sz=150';
+    }
+    return url;
 }
 
 // A loading image URL.
@@ -534,52 +559,52 @@ var LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif?a';
 
 // Delete a Message from the UI.
 function deleteMessage(id) {
-  var div = document.getElementById(id);
-  // If an element for that message exists we delete it.
-  if (div) {
-    deleteDoc(doc(getFirestore(), 'chats/general/messages', id));
-    div.parentNode.removeChild(div);
-  }
+    var div = document.getElementById(id);
+    // If an element for that message exists we delete it.
+    if (div) {
+        deleteDoc(doc(getFirestore(), 'chats/general/messages', id));
+        div.parentNode.removeChild(div);
+    }
 }
 
 function createAndInsertMessage(id, timestamp) {
-  const container = document.createElement('div');
-  container.innerHTML = MESSAGE_TEMPLATE;
-  const div = container.firstChild;
-  div.setAttribute('id', id);
+    const container = document.createElement('div');
+    container.innerHTML = MESSAGE_TEMPLATE;
+    const div = container.firstChild;
+    div.setAttribute('id', id);
 
-  // If timestamp is null, assume we've gotten a brand new message.
-  // https://stackoverflow.com/a/47781432/4816918
-  timestamp = timestamp ? timestamp.toMillis() : Date.now();
-  div.setAttribute('timestamp', timestamp);
+    // If timestamp is null, assume we've gotten a brand new message.
+    // https://stackoverflow.com/a/47781432/4816918
+    timestamp = timestamp ? timestamp.toMillis() : Date.now();
+    div.setAttribute('timestamp', timestamp);
 
-  // figure out where to insert new message
-  const existingMessages = messageListElement.children;
-  if (existingMessages.length === 0) {
-    messageListElement.appendChild(div);
-  } else {
-    let messageListNode = existingMessages[0];
+    // figure out where to insert new message
+    const existingMessages = messageListElement.children;
+    if (existingMessages.length === 0) {
+        messageListElement.appendChild(div);
+    } else {
+        let messageListNode = existingMessages[0];
 
-    while (messageListNode) {
-      const messageListNodeTime = messageListNode.getAttribute('timestamp');
+        while (messageListNode) {
+            const messageListNodeTime = messageListNode.getAttribute('timestamp');
 
-      if (!messageListNodeTime) {
-        throw new Error(
-          `Child ${messageListNode.id} has no 'timestamp' attribute`
-        );
-      }
+            if (!messageListNodeTime) {
+                throw new Error(
+                    `Child ${messageListNode.id} has no 'timestamp' attribute`
+                );
+            }
 
-      if (messageListNodeTime > timestamp) {
-        break;
-      }
+            if (messageListNodeTime > timestamp) {
+                break;
+            }
 
-      messageListNode = messageListNode.nextSibling;
+            messageListNode = messageListNode.nextSibling;
+        }
+
+        messageListElement.insertBefore(div, messageListNode);
     }
 
-    messageListElement.insertBefore(div, messageListNode);
-  }
-
-  return div;
+    return div;
 }
 
 // Displays a Message in the UI.
@@ -743,11 +768,11 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl, messageColo
 // Enables or disables the submit button depending on the values of the input
 // fields.
 function toggleButton() {
-  if (messageInputElement.value) {
-    submitButtonElement.removeAttribute('disabled');
-  } else {
-    submitButtonElement.setAttribute('disabled', 'true');
-  }
+    if (messageInputElement.value) {
+        submitButtonElement.removeAttribute('disabled');
+    } else {
+        submitButtonElement.setAttribute('disabled', 'true');
+    }
 }
 
 // Shortcuts to DOM Elements.
@@ -775,8 +800,8 @@ messageInputElement.addEventListener('change', toggleButton);
 
 // Events for image upload.
 imageButtonElement.addEventListener('click', function (e) {
-  e.preventDefault();
-  mediaCaptureElement.click();
+    e.preventDefault();
+    mediaCaptureElement.click();
 });
 mediaCaptureElement.addEventListener('change', onMediaFileSelected);
 
