@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import "@material/floating-label/mdc-floating-label.scss";
+@import "@material/line-ripple/mdc-line-ripple.scss";
+@import "@material/notched-outline/mdc-notched-outline.scss";
+@import "@material/textfield";
+
+:root {
+  --font-color: #737373;
+  --button-color: #039BE5;
+  --button-chat-color: #FFA000;
+  --button-delete-color: #FF5252;
+}
+
+* {
+  font-family: Roboto;
+  padding: 0;
+  margin: 0;
+}
+
+#header-chat {
+  position: fixed !important;
+}
+
+body {
+  overflow-y: hidden;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  margin-top: 20px;
+  color: var(--font-color);
+  text-align: center;
+}
+
+.top div{
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.logo {
+  display: block;
+  margin: auto;
+  width: 250px;
+}
+
+.profil-picture {
+  display: block;
+  margin: auto;
+  width: 250px;
+  border-radius: 50%;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 0;
+}
+
+.bottom div{
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.mdc-button {
+  width: 300px;
+  height: 50px !important;
+  background-color: var(--button-color) !important;
+  border-radius: 10px !important;
+}
+
+.chat-button {
+  background-color: var(--button-chat-color) !important;
+}
+
+.delete-button {
+  background-color: var(--button-delete-color) !important;
+}
+
+.mdc-top-app-bar {
+  background-color: var(--button-color) !important;
+  position: relative !important;
+}
+
+.bottom label{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 300px;
+  background-color: white !important;
+}
+
+.top label{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 300px;
+  background-color: white !important;
+}
+
+.mdc-text-field__input {
+  caret-color: #039BE5 !important;
+}
+
+.top-bar {
+  background-color: #90e0ef;
+  height: 50px !important;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mdl-layout__content {
+  height: 100%;
+  max-height: 100%;
+  width: 100%;
+  max-width: 100%;
+}
+
+#messages-card-container {
+  padding: 0px !important;
+  margin: 0px !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+#messages-card {
+  width: 100%;
+  max-width: 100%;
+  margin: 0px !important;
+}
+
+#messages {
+  margin-bottom: 134px;
+}
+
+.message {
+  max-width: 33%;
+}
+
+.message img {
+  max-width: 100%;
+}
+
+.pic img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.mdl-card__supporting-text {
+  width: 100%;
+  padding: 0px;
+}
+
+.message-container {
+  margin: 20px 0px 10px 10px;
+  margin-bottom: 0px;
+  display: flex;
+  flex-direction: row;
+}
+
+.author {
+  flex-direction: row-reverse !important;
+}
+
+.pic {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.message {
+  margin-top: 10px;
+}
+
+.name {
+  text-align: end;
+}
+
+.author .date {
+  text-align: end;
+}
+
+.text {
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.delete {
+  margin-top: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+#index {
+  display: none;
+}
+
+#connecter {
+  display: none;
+}
+
+#inscription {
+  display: none;
+}
+
+#connexion {
+  display: none;
+}
+
+#oublie {
+  display: none;
+}
+
+#profil {
+  display: none;
+}
+
+#chat {
+  display: none;
+}
+.plus {
+   font-variation-settings:
+           'FILL' 1,
+           'wght' 400,
+           'GRAD' 0,
+           'opsz' 48;
+   color : var(--button-chat-color);
+ }
+
+.form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  z-index: 10000;
+  width: 100%;
+  background-color: white;
+}
+
+#image-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+#submit {
+  margin-left: 20px;
+}

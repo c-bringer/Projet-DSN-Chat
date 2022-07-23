@@ -1,0 +1,24 @@
+{
+  "name": "ProjetDSN",
+  "version": "1.0.0",
+  "description": "[Firebase Web Codelab](https://firebase.google.com/codelabs/firebase-web)",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack --watch --progress",
+    "visualize-bundle": "webpack --analyze",
+    "electron": "electron ."
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "webpack": "^5.48.0",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "electron": "^19.0.8",
+    "firebase": "^9.0.0"
+  }
+}
