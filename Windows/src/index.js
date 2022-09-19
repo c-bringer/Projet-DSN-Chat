@@ -110,6 +110,7 @@ document.getElementById('connecter-to-profil').addEventListener('click', functio
     const queryPseudo = query(collection(getFirestore(), 'users'), where("uid", "==", getAuth().currentUser.uid));
     onSnapshot(queryPseudo, function(snapshot) {
         snapshot.docChanges().forEach(function(change) {
+             document.getElementById('pseudo-change1').innerHTML='';
             document.getElementById('pseudo-change1').innerText = document.getElementById('pseudo-change1').innerText + ' ' + change.doc.data().username;
             if(change.doc.data().urlPicture) {
                 document.getElementById('A').src = change.doc.data().urlPicture;
