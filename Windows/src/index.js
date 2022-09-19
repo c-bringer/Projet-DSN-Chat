@@ -124,7 +124,7 @@ document.getElementById('connecter-to-profil').addEventListener('click', functio
     document.getElementById('profil').style.display = "block";
 });
 
-document.getElementById('connecter-to-chat').addEventListener('click', function() {
+document.getElementById('connecter-to-chat').addEventListener('click',  function() {
     document.getElementById('connecter').style.display = "none";
     document.getElementById('chat').style.display = "block";
 });
@@ -136,6 +136,7 @@ document.getElementById('profil-to-connecter').addEventListener('click', functio
 });
 
 document.getElementById('update-profil').addEventListener('click', udpateUserPorfil);
+
 
 document.getElementById('sign-out').addEventListener('click', signOutUser);
 
@@ -271,12 +272,21 @@ function deleteUser() {
   });
 }
 
+function removeAllMessage(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
+}
+
 // Signs-out of Friendly Chat.
 function signOutUser() {
   // Sign out of Firebase.
   signOut(getAuth());
     document.getElementById('profil').style.display = "none";
     document.getElementById('index').style.display = "block";
+    let parent = document.getElementById("messages");
+    removeAllMessage(parent);
+    
 }
 
 //Fonction update profil
