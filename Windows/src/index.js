@@ -110,6 +110,7 @@ document.getElementById('connecter-to-profil').addEventListener('click', functio
     const queryPseudo = query(collection(getFirestore(), 'users'), where("uid", "==", getAuth().currentUser.uid));
     onSnapshot(queryPseudo, function(snapshot) {
         snapshot.docChanges().forEach(function(change) {
+             document.getElementById('pseudo-change1').innerHTML='';
             document.getElementById('pseudo-change1').innerText = document.getElementById('pseudo-change1').innerText + ' ' + change.doc.data().username;
             if(change.doc.data().urlPicture) {
                 document.getElementById('A').src = change.doc.data().urlPicture;
@@ -123,7 +124,7 @@ document.getElementById('connecter-to-profil').addEventListener('click', functio
     document.getElementById('profil').style.display = "block";
 });
 
-document.getElementById('connecter-to-chat').addEventListener('click', function() {
+document.getElementById('connecter-to-chat').addEventListener('click',  function() {
     document.getElementById('connecter').style.display = "none";
     document.getElementById('chat').style.display = "block";
 });
@@ -135,6 +136,7 @@ document.getElementById('profil-to-connecter').addEventListener('click', functio
 });
 
 document.getElementById('update-profil').addEventListener('click', udpateUserPorfil);
+
 
 document.getElementById('sign-out').addEventListener('click', signOutUser);
 
@@ -270,12 +272,21 @@ function deleteUser() {
   });
 }
 
+function removeAllMessage(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
+}
+
 // Signs-out of Friendly Chat.
 function signOutUser() {
   // Sign out of Firebase.
   signOut(getAuth());
     document.getElementById('profil').style.display = "none";
     document.getElementById('index').style.display = "block";
+    let parent = document.getElementById("messages");
+    removeAllMessage(parent);
+    
 }
 
 //Fonction update profil
