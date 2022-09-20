@@ -56,17 +56,17 @@
   </div>
   <div class="container bottom">
     <div>
-      <button id="bouton-connexion" class="mdc-button mdc-button--raised">
+      <button id="bouton-connexion" class="mdc-button-google mdc-button--raised">
         <span class="mdc-button__label">CONNEXION</span>
       </button>
     </div>
     <div>
-      <button id="bouton-s-inscrire" class="mdc-button mdc-button--raised default-button">
+      <button id="bouton-s-inscrire" class="mdc-button-google mdc-button--raised default-button">
         <span class="mdc-button__label">S'INSCRIRE</span>
       </button>
     </div>
     <div>
-      <button id="bouton-discuter-sur-le-chat" class="mdc-button mdc-button--raised chat-button">
+      <button id="bouton-discuter-sur-le-chat" class="mdc-button-google mdc-button--raised chat-button">
         <span class="mdc-button__label">DISCUTER SUR LE CHAT</span>
       </button>
     </div>
@@ -88,7 +88,7 @@
   </div>
   <div class="container bottom">
     <div>
-      <label class="mdc-text-field mdc-text-field--filled">
+      <label class="mdc-text-field mdc-text-field--filled email">
         <span class="mdc-text-field__ripple"></span>
         <span class="mdc-floating-label">Adresse email</span>
         <input id="email-connect" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
@@ -96,20 +96,21 @@
       </label>
     </div>
     <div>
-      <label class="mdc-text-field mdc-text-field--filled">
+      <label class="mdc-text-field mdc-text-field--filled password-connection">
         <span class="mdc-text-field__ripple"></span>
-        <span class="mdc-floating-label">Mot de passe</span>
-        <input id="password-connect" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+        <input id="password-connect" type="password" class="mdc-text-field__input" aria-labelledby="password-label" name="password" required minlength="8">
+        <span class="mdc-floating-label" id="password-connection-label">Mot de passe</span>
+        <i id="password-connection-icon" aria-hidden="true" class="material-icons mdc-text-field__icon"><!---->visibility_off<!----></i>
         <span class="mdc-line-ripple"></span>
       </label>
     </div>
     <div>
-      <button id="sign-in" class="mdc-button mdc-button--raised default-button">
+      <button id="sign-in" class="mdc-button-google mdc-button--raised default-button">
         <span class="mdc-button__label">CONNEXION</span>
       </button>
     </div>
     <div>
-      <button id="connexion-to-forgot" class="mdc-button mdc-button--raised chat-button">
+      <button id="connexion-to-forgot" class="mdc-button-google mdc-button--raised chat-button">
         <span class="mdc-button__label">MOT DE PASSE OUBLIÉ ?</span>
       </button>
     </div>
@@ -123,12 +124,12 @@
   </div>
   <div class="container bottom">
     <div>
-      <button id="connecter-to-profil" class="mdc-button mdc-button--raised default-button">
+      <button id="connecter-to-profil" class="mdc-button-google mdc-button--raised default-button">
         <span class="mdc-button__label">AFFICHER LE PROFIL</span>
       </button>
     </div>
     <div>
-      <button id="connecter-to-chat" class="mdc-button mdc-button--raised chat-button">
+      <button id="connecter-to-chat" class="mdc-button-google mdc-button--raised chat-button">
         <span class="mdc-button__label">DISCUTER SUR LE CHAT</span>
       </button>
     </div>
@@ -148,39 +149,38 @@
       <img class="logo" src="images/logo.png" alt="Logo de l'application">
       <img id="A" class="profil-picture"  alt="Photo de profil de l'utilisateur">
     </div>
-    <div>
-      <label class="mdc-text-field mdc-text-field--filled">
+    <form>
+      <label id="email-label" class="mdc-text-field mdc-text-field--filled username">
+        <span id="email-span1" class="mdc-text-field__ripple"></span>
+        <input id="email-change" type="email" class="mdc-text-field__input" aria-labelledby="username-label" name="username" required>
+        <span id="email-span2" class="mdc-floating-label" id="username-label">Adresse mail</span>
+        <span id="email-span3" class="mdc-line-ripple"></span>
+      </label>
+      <label class="mdc-text-field mdc-text-field--filled password">
         <span class="mdc-text-field__ripple"></span>
-        <span class="mdc-floating-label">Adresse email</span>
-        <input id="email-change" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
+        <input id="password-change" type="password" class="mdc-text-field__input" aria-labelledby="password-label" name="password" required minlength="8">
+        <span class="mdc-floating-label" id="password-label">Mot de passe</span>
+        <i id="password-icon" aria-hidden="true" class="material-icons mdc-text-field__icon"><!---->visibility_off<!----></i>
         <span class="mdc-line-ripple"></span>
       </label>
-    </div>
-    <div>
-      <label class="mdc-text-field mdc-text-field--filled">
-        <span class="mdc-text-field__ripple"></span>
-        <span class="mdc-floating-label">Mot de passe</span>
-        <input id="password-change" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
-        <span class="mdc-line-ripple"></span>
-      </label>
-    </div>
+    </form>
     <div>
       <p id="pseudo-change"><strong>Pseudo : </strong></p>
     </div>
   </div>
   <div class="container bottom">
     <div>
-      <button id="update-profil" class="mdc-button mdc-button--raised default-button">
+      <button id="update-profil" class="mdc-button-google mdc-button--raised default-button">
         <span class="mdc-button__label">METTRE À JOUR</span>
       </button>
     </div>
     <div>
-      <button id="sign-out" class="mdc-button mdc-button--raised chat-button">
+      <button id="sign-out" class="mdc-button-google mdc-button--raised chat-button">
         <span class="mdc-button__label">DÉCONNEXION</span>
       </button>
     </div>
     <div>
-      <button id="delete-user" class="mdc-button mdc-button--raised red-button delete-button">
+      <button id="delete-user" class="mdc-button-google mdc-button--raised red-button delete-button">
         <span class="mdc-button__label">SUPPRIMER MON COMPTE</span>
       </button>
     </div>
@@ -202,7 +202,7 @@
   </div>
   <div class="container bottom">
     <div>
-      <label class="mdc-text-field mdc-text-field--filled">
+      <label class="mdc-text-field mdc-text-field--filled email-inscription">
         <span class="mdc-text-field__ripple"></span>
         <span class="mdc-floating-label">Adresse email</span>
         <input id="email-create" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
@@ -210,7 +210,7 @@
       </label>
     </div>
     <div>
-      <label class="mdc-text-field mdc-text-field--filled">
+      <label class="mdc-text-field mdc-text-field--filled pseudo-inscription">
         <span class="mdc-text-field__ripple"></span>
         <span class="mdc-floating-label">Pseudo</span>
         <input id="pseudo-create" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
@@ -218,7 +218,7 @@
       </label>
     </div>
     <div>
-      <label class="mdc-text-field mdc-text-field--filled">
+      <label class="mdc-text-field mdc-text-field--filled password-inscription">
         <span class="mdc-text-field__ripple"></span>
         <span class="mdc-floating-label">Mot de passe</span>
         <input id="password-create" class="mdc-text-field__input" type="text" aria-labelledby="my-label-id">
@@ -226,7 +226,7 @@
       </label>
     </div>
     <div>
-      <button id="sign-up" class="mdc-button mdc-button--raised default-button">
+      <button id="sign-up" class="mdc-button-google mdc-button--raised default-button">
         <span class="mdc-button__label">S'INSCRIRE</span>
       </button>
     </div>
@@ -256,7 +256,7 @@
       </label>
     </div>
     <div>
-      <button id="bouton-forget" class="mdc-button mdc-button--raised default-button">
+      <button id="bouton-forget" class="mdc-button-google mdc-button--raised default-button">
         <span class="mdc-button__label">CONNEXION</span>
       </button>
     </div>
@@ -297,6 +297,7 @@
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="text" id="message" autocomplete="off">
                 <label class="mdl-textfield__label" for="message">Composer votre message</label>
+                <p id="counter-char">0/1000</p>
               </div>
               <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                 ENVOYER
@@ -313,6 +314,26 @@
 
     </div>
   </main>
+</div>
+<div class="mdc-dialog">
+  <div class="mdc-dialog__container">
+    <div class="mdc-dialog__surface"
+         role="alertdialog"
+         aria-modal="true"
+         aria-labelledby="my-dialog-title"
+         aria-describedby="my-dialog-content">
+      <div class="mdc-dialog__content" id="my-dialog-content">
+        Test
+      </div>
+      <div class="mdc-dialog__actions">
+        <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="discard">
+          <div class="mdc-button__ripple"></div>
+          <span class="mdc-button__label">OK</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mdc-dialog__scrim"></div>
 </div>
 <script src="scripts/main.js"></script>
 </body>

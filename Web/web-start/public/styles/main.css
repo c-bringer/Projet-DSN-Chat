@@ -1,7 +1,9 @@
+@import "@material/textfield/mdc-text-field.scss";
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import "@material/floating-label/mdc-floating-label.scss";
 @import "@material/line-ripple/mdc-line-ripple.scss";
 @import "@material/notched-outline/mdc-notched-outline.scss";
+@import "@material/dialog";
 @import "@material/textfield";
 
 :root {
@@ -9,6 +11,7 @@
   --button-color: #039BE5;
   --button-chat-color: #FFA000;
   --button-delete-color: #FF5252;
+  --mdc-theme-primary: #FFA000 !important;
 }
 
 * {
@@ -44,6 +47,10 @@ body {
   justify-content: center;
 }
 
+.top form {
+  margin: auto;
+}
+
 .logo {
   display: block;
   margin: auto;
@@ -69,15 +76,24 @@ body {
   justify-content: center;
 }
 
-.mdc-button {
+.mdc-button-google {
   width: 300px;
   height: 50px !important;
   background-color: var(--button-color) !important;
   border-radius: 10px !important;
+  border: 0px;
 }
 
 .chat-button {
   background-color: var(--button-chat-color) !important;
+}
+
+.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label{
+  color: var(--button-chat-color) !important;
+}
+
+.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: #b00020 !important;
 }
 
 .delete-button {
@@ -256,4 +272,8 @@ body {
 
 #submit {
   margin-left: 20px;
+}
+
+#counter-char {
+  position: absolute;
 }

@@ -1,18 +1,3 @@
-/**
- * Copyright 2015 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 'use strict';
 
 import { initializeApp } from 'firebase/app';
@@ -42,6 +27,7 @@ import {
     updateDoc,
     doc,
     serverTimestamp,
+    getDocs,
 } from 'firebase/firestore';
 import {
     getStorage,
@@ -53,13 +39,14 @@ import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { getPerformance } from 'firebase/performance';
 
 import { getFirebaseConfig } from './firebase-config.js';
+let tinycolor = require("tinycolor2");
 
-var windowFocus;
+var windowFocus = Date.now();
 var windowBlur;
 
 window.addEventListener('focus', function() {
     windowFocus = Date.now();
-
+    console.log(windowFocus);
 });
 window.addEventListener('blur', function() {
     windowBlur = Date.now();
@@ -77,7 +64,8 @@ document.getElementById('bouton-s-inscrire').addEventListener('click', function(
 });
 
 document.getElementById('bouton-discuter-sur-le-chat').addEventListener('click', function() {
-    alert("Vous devez être connecter pour discuter sur le chat.");
+    dialog.open();
+    dialogText.innerHTML = "Vous devez être connecter pour discuter sur le chat.";
 });
 
 // Boutons de la page connexion
@@ -107,10 +95,12 @@ document.getElementById('connecter-to-profil').addEventListener('click', functio
 
     document.getElementById('email-change').value = auth.currentUser.email;
 
+    document.getElementById('email-span2').classList.add("mdc-floating-label--float-above");
+
     const queryPseudo = query(collection(getFirestore(), 'users'), where("uid", "==", getAuth().currentUser.uid));
     onSnapshot(queryPseudo, function(snapshot) {
         snapshot.docChanges().forEach(function(change) {
-            document.getElementById('pseudo-change').innerText = document.getElementById('pseudo-change').innerText + ' ' + change.doc.data().username;
+            document.getElementById('pseudo-change').innerText = 'Pseudo : ' + change.doc.data().username;
             if(change.doc.data().urlPicture) {
                 document.getElementById('A').src = change.doc.data().urlPicture;
             } else {
@@ -126,6 +116,7 @@ document.getElementById('connecter-to-profil').addEventListener('click', functio
 document.getElementById('connecter-to-chat').addEventListener('click', function() {
     document.getElementById('connecter').style.display = "none";
     document.getElementById('chat').style.display = "block";
+    window.scrollTo(0, document.body.scrollHeight);
 });
 
 // Boutons de la page profil
@@ -139,6 +130,14 @@ document.getElementById('update-profil').addEventListener('click', udpateUserPor
 document.getElementById('sign-out').addEventListener('click', signOutUser);
 
 document.getElementById('delete-user').addEventListener('click', deleteUser);
+
+document.getElementById('password-icon').addEventListener('click', function() {
+    if (document.getElementById('password-icon').innerText == "visibility_off") {
+        document.getElementById('password-icon').innerText = "visibility";
+    } else {
+        document.getElementById('password-icon').innerText = "visibility_off";
+    }
+});
 
 // Boutons de la page inscription
 document.getElementById('inscription-to-index').addEventListener('click', function() {
@@ -154,46 +153,119 @@ document.getElementById('chat-to-connecter').addEventListener('click', function(
     document.getElementById('connecter').style.display = "block";
 });
 
-function signUp() {
+async function signUp() {
+
     let usernameCreate = document.getElementById('pseudo-create').value;
     let email = document.getElementById('email-create').value;
     let password = document.getElementById('password-create').value;
+    let regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%?,;.:/^&*])(?=.{8,})");
 
-    createUserWithEmailAndPassword(auth, email, password)
-        .then(async (userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            let file = null;
-            try {
-                await setDoc(doc(getFirestore(), 'users/'+user.uid), {
-                    messageColor: '#'+(Math.random()*0xFFFFFF<<0).toString(16),
-                    uid: user.uid,
-                    urlPicture: file,
-                    username: usernameCreate
-                });
-            } catch (error) {
-                console.error('Error writing new message to Firebase Database', error);
-            }
-        })
-        .catch((error) => {
-            //pour la creation de user
-            if(error.code == 'auth/invalid-email')
-            {
-                alert('Adresse mail non valide')
-            }
+    let usernameNeverUse = true;
+    let emailNeverUse = true;
 
-            if(error.code == 'auth/email-already-in-use')
-            {
-                alert('Adresse mail déja utilisé')
-            }
-            if (error.code == "auth/weak-password") {
-                alert("Mot de passe trop faible.")
-            }
+    let q = query(collection(getFirestore(), "users"), where('username', '==', usernameCreate));
+    let querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+            usernameNeverUse = false;
+    });
 
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // ..
-        });
+    let q2 = query(collection(getFirestore(), "users"), where('username', '==', usernameCreate));
+    let querySnapshot2 = await getDocs(q2);
+    querySnapshot.forEach((doc) => {
+        usernameNeverUse = false;
+    });
+
+    if (usernameNeverUse) {
+            if (regex.test(password)) {
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then(async (userCredential) => {
+                        // Signed in
+                        const user = userCredential.user;
+                        let file = null;
+                        try {
+                            await setDoc(doc(getFirestore(), 'users/' + user.uid), {
+                                messageColor: '#' + (Math.random() * 0xFFFFFF << 0).toString(16),
+                                uid: user.uid,
+                                urlPicture: file,
+                                username: usernameCreate
+                            });
+                        } catch (error) {
+                            console.error('Error writing new message to Firebase Database', error);
+                        }
+                    })
+                    .catch((error) => {
+                        //pour la creation de user
+                        if (error.code == 'auth/invalid-email') {
+                            dialog.open();
+                            dialogText.innerHTML = "Adresse mail non valide.";
+                        }
+
+                        if (error.code == 'auth/email-already-in-use') {
+                            dialog.open();
+                            dialogText.innerHTML = "Adresse mail déja utilisé.";
+                        }
+                        if (error.code == "auth/weak-password") {
+                            dialog.open();
+                            dialogText.innerHTML = "Mot de passe trop faible.";
+                        }
+
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        // ..
+                    });
+            } else {
+                dialog.open();
+                dialogText.innerHTML = "Le mot de passe doit contenir au minimum 8 charactères :<br>- 1 Minuscule<br>- 1 Majuscule<br>- 1 charactère spéciale";
+            }
+        } else {
+            dialog.open();
+            dialogText.innerHTML = "Un compte possédant ce pseudo existe déjà.";
+        }
+
+    /*console.log('emailNeverUse ' + emailNeverUse);
+    console.log('usernameNeverUse ' + usernameNeverUse);
+
+    if (regex.test(password) && usernameNeverUse) {
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(async (userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                let file = null;
+                try {
+                    await setDoc(doc(getFirestore(), 'users/' + user.uid), {
+                        messageColor: '#' + (Math.random() * 0xFFFFFF << 0).toString(16),
+                        uid: user.uid,
+                        urlPicture: file,
+                        username: usernameCreate
+                    });
+                } catch (error) {
+                    console.error('Error writing new message to Firebase Database', error);
+                }
+            })
+            .catch((error) => {
+                //pour la creation de user
+                if (error.code == 'auth/invalid-email') {
+                    dialog.open();
+                    dialogText.innerHTML = "Adresse mail non valide.";
+                }
+
+                if (error.code == 'auth/email-already-in-use') {
+                    dialog.open();
+                    dialogText.innerHTML = "Adresse mail déja utilisé.";
+                }
+                if (error.code == "auth/weak-password") {
+                    dialog.open();
+                    dialogText.innerHTML = "Mot de passe trop faible.";
+                }
+
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+            });
+    } else {
+        dialog.open();
+        dialogText.innerHTML = "Mot de passe pas assez fort.";
+    }*/
 }
 
 // Signs-in Friendly Chat.
@@ -205,7 +277,6 @@ async function signIn() {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            console.log(user);
             document.getElementById('connexion').style.display = "none";
             document.getElementById('connecter').style.display = "block";
             // ...
@@ -213,19 +284,19 @@ async function signIn() {
         .catch((error) => {
             if(error.code == 'auth/invalid-email')
             {
-                alert('Adresse mail non valide')
+                dialog.open();
+                dialogText.innerHTML = "Adresse mail non valide.";
             }
             if(error.code == 'auth/wrong-password')
             {
-                alert('Mauvais mot de passe / email')
+                dialog.open();
+                dialogText.innerHTML = "Mauvais mot de passe / email.";
             }
             if(error.code == 'auth/user-not-found')
             {
-                alert('Utilisateur inexistant')
+                dialog.open();
+                dialogText.innerHTML = "Utilisateur inexistant.";
             }
-
-
-            console.log(error.code);
             const errorCode = error.code;
             const errorMessage = error.message;
             // ..
@@ -237,9 +308,9 @@ function resetPassword() {
     sendPasswordResetEmail(getAuth(), email).then(function () {
         document.getElementById('oublie').style.display = "none";
         document.getElementById('connexion').style.display = "block";
-        alert("Un mail vous a était envoyé a l'adresse : " + email + " veuillez vérifier vos spams." );
+        dialog.open();
+        dialogText.innerHTML = "Un mail vous a était envoyé a l'adresse : " + email + " veuillez vérifier vos spams.";
     }).catch((error) => {
-        console.log("ERREUR");
         const errorCode = error.code;
         const errorMessage = error.message;
         // ..
@@ -272,26 +343,32 @@ function signOutUser() {
 function udpateUserPorfil() {
     let email = document.getElementById('email-change').value;
     let password = document.getElementById('password-change').value;
-    console.log(password=='');
+    let regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%?,;.:/^&*])(?=.{8,})");
+    if(regex.test(password))
+    {
+        let auth = getAuth();
 
-    let auth = getAuth();
+        updateEmail(auth.currentUser, email).then(() => {
+            dialog.open();
+            dialogText.innerHTML = "Adresse mail mise à jour.";
 
-    updateEmail(auth.currentUser, email).then(() => {
-        alert("Adresse mail mise à jour.");
-
-        if (password!='') {
-            updatePassword(auth.currentUser, password).then(() => {
-                alert("Mot de passe mis à jour.");
-            }).catch((error) => {
-                // An error ocurred
-                // ...
-            });
-        }
-    }).catch((error) => {
-        console.log(error);
-        // An error occurred
-        // ...
-    });
+            if (password!='') {
+                updatePassword(auth.currentUser, password).then(() => {
+                    dialog.open();
+                    dialogText.innerHTML = "Mot de passe mis à jour.";
+                }).catch((error) => {
+                    // An error ocurred
+                    // ...
+                });
+            }
+        }).catch((error) => {
+            // An error occurred
+            // ...
+        });
+    } else{
+        dialog.open();
+        dialogText.innerHTML = "Mot de passe pas assez fort.";
+    }
 }
 
 // Initiate firebase auth
@@ -365,15 +442,15 @@ function loadMessages() {
                 deleteMessage(change.doc.id);
             } else {
                 var message = change.doc.data();
+                let colorBackground = change.doc.data().userSender.messageColor;
+                let colorText = tinycolor.mostReadable(colorBackground, ['#000000'], {includeFallbackColors:true}).toString();
                 if (change.doc.data().userSender.uid === getAuth().lastNotifiedUid){
                     displayMessage(change.doc.id, message.dateCreated, message.userSender.username,
-                        message.message, message.userSender.urlPicture, message.urlImage, message.userSender.messageColor, true);
+                        message.message, message.userSender.urlPicture, message.urlImage, message.userSender.messageColor,colorText, true);
                 } else {
                     displayMessage(change.doc.id, message.dateCreated, message.userSender.username,
-                        message.message, message.userSender.urlPicture, message.urlImage, message.userSender.messageColor,false);
+                        message.message, message.userSender.urlPicture, message.urlImage, message.userSender.messageColor,colorText,false);
                 }
-                console.log(windowFocus);
-                console.log(windowBlur);
 
                 if (windowFocus < windowBlur ) {
                     Notification.requestPermission().then((permission) => {
@@ -394,6 +471,8 @@ function loadMessages() {
 // Saves a new message containing an image in Firebase.
 // This first saves the image in Firebase storage.
 async function saveImageMessage(file, messageText) {
+    let uuid = self.crypto.randomUUID();
+
     if(messageText==null){
         messageText=null;
     }
@@ -416,21 +495,18 @@ async function saveImageMessage(file, messageText) {
                 });
 
                 // 2 - Upload the image to Cloud Storage.
-                const filePath = `${getAuth().currentUser.uid}/${messageRef.id}/${file.name}`;
+                const filePath = `general/${uuid}`;
                 const newImageRef = ref(getStorage(), filePath);
                 const fileSnapshot = await uploadBytesResumable(newImageRef, file);
 
                 // 3 - Generate a public URL for the file.
                 const publicImageUrl = await getDownloadURL(newImageRef);
-                console.log(publicImageUrl);
-                console.log(messageRef);
 
                 // 4 - Update the chat message placeholder with the image's URL.
                 await updateDoc(messageRef, {
                     urlImage: publicImageUrl,
                 });
             } catch (error) {
-                console.error('There was an error uploading a file to Cloud Storage:', error);
             }
         }
     });
@@ -473,13 +549,21 @@ function onMediaFileSelected(event) {
 // Triggered when the send new message form is submitted.
 function onMessageFormSubmit(e) {
     e.preventDefault();
+    const regex1000 = new RegExp('^.{1,1000}$');
     // Check that the user entered a message and is signed in.
-    if (messageInputElement.value && checkSignedInWithMessage()) {
-        saveMessage(messageInputElement.value).then(function () {
-            // Clear message text field and re-enable the SEND button.
-            resetMaterialTextfield(messageInputElement);
-            toggleButton();
-        });
+    if (regex1000.test(messageInputElement.value)) {
+        if (messageInputElement.value && checkSignedInWithMessage()) {
+            saveMessage(messageInputElement.value).then(function () {
+                // Clear message text field and re-enable the SEND button.
+                resetMaterialTextfield(messageInputElement);
+                toggleButton();
+                counterChar.innerHTML = messageInputElement.value.length + '/1000'
+            });
+        }
+    }
+    else {
+        dialog.open();
+        dialogText.innerHTML = "Votre message est trop long."
     }
 }
 
@@ -699,7 +783,7 @@ function createAndInsertMessage(id, timestamp) {
   messageInputElement.focus();
 }*/
 
-function displayMessage(id, timestamp, name, text, picUrl, imageUrl, messageColor, isAuthor) {
+function displayMessage(id, timestamp, name, text, picUrl, imageUrl, messageColor, colorText, isAuthor) {
 
     let div = document.getElementById(id) || createAndInsertMessage(id, timestamp);
 
@@ -709,7 +793,7 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl, messageColo
     }
     else {
         //div.querySelector('.pp').src = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
-        div.querySelector('.pp').src = "../images/profil_picture.png";
+        div.querySelector('.pp').src = "../public/images/profil_picture.png";
     }
 
     // Nom d'utilisateur
@@ -721,6 +805,7 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl, messageColo
     //Texte
     let texte = div.querySelector('.text');
     texte.style.backgroundColor = messageColor;
+    texte.style.color = colorText;
 
     let image  = div.querySelector('.img');
 
@@ -763,6 +848,7 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl, messageColo
     }, 1);
     messageListElement.scrollTop = messageListElement.scrollHeight;
     messageInputElement.focus();
+    window.scrollTo(0, document.body.scrollHeight);
 }
 
 // Enables or disables the submit button depending on the values of the input
@@ -811,13 +897,23 @@ const auth = getAuth(app);
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
+        //NOTIFICATION
+        Notification.requestPermission().then((permission) => {
+            // Si l'utilisateur accepte, créons une notification
+            const permissionNotification = permission;
+            /*if (permission === 'granted') {
+                const notification = new Notification(message.userSender.username + ' a envoyé ' + message.message);
+                notification.addEventListener('click', function (){
+                    window.focus();
+                })
+            }*/
+        })
         loadMessages();
         var pseudo;
         const queryPseudo = query(collection(getFirestore(), 'users'), where("uid", "==", getAuth().currentUser.uid));
         onSnapshot(queryPseudo, function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
                 pseudo = change.doc.data().username;
-                console.log(change.doc.data().username);
             });
         });
         document.getElementById('index').style.display = "none";
@@ -833,3 +929,47 @@ onAuthStateChanged(auth, (user) => {
 // TODO 12: Initialize Firebase Performance Monitoring
 
 initFirebaseAuth();
+
+import {MDCTextField} from '@material/textfield';
+
+const email = new MDCTextField(document.querySelector('.email'));
+const passwordConnection = new MDCTextField(document.querySelector('.password-connection'));
+const emailInscription = new MDCTextField(document.querySelector('.email-inscription'));
+const pseudoInscription = new MDCTextField(document.querySelector('.pseudo-inscription'));
+const passwordInscription = new MDCTextField(document.querySelector('.password-inscription'));
+const username = new MDCTextField(document.querySelector('.username'));
+const password = new MDCTextField(document.querySelector('.password'));
+
+import {MDCDialog} from '@material/dialog';
+const dialog = new MDCDialog(document.querySelector('.mdc-dialog'));
+const dialogText = document.getElementById('my-dialog-content');
+const counterChar = document.getElementById('counter-char');
+
+messageInputElement.addEventListener('input', function() {
+    counterChar.innerHTML = messageInputElement.value.length + '/1000'
+});
+
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+    service: 'hotmail',
+    auth: {
+        user: 'dsn.chatnode12345@outlook.fr',
+        pass: 'Ceciestmonmotdepasse123'
+    }
+});
+
+const mailOptions = {
+    from: 'dsn.chatnode12345@outlook.fr',
+    to: 'gaetan.charronbalat@limayrac.fr',
+    subject: 'Sending Email using Node.js',
+    text: 'That was easy!'
+};
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });*/
