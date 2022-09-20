@@ -87,7 +87,7 @@ document.getElementById('oublie-to-connexion').addEventListener('click', functio
     document.getElementById('connexion').style.display = "block";
 });
 
-//document.getElementById('bouton-forget').addEventListener('click', resetPassword);
+document.getElementById('bouton-forget').addEventListener('click', resetPassword);
 
 // Boutons de la page connecter
 document.getElementById('connecter-to-profil').addEventListener('click', function() {
@@ -947,63 +947,4 @@ const counterChar = document.getElementById('counter-char');
 
 messageInputElement.addEventListener('input', function() {
     counterChar.innerHTML = messageInputElement.value.length + '/1000'
-});
-
-/*const axios = require("axios");
-
-const options = {
-    method: 'POST',
-    url: 'https://rapidprod-sendgrid-v1.p.rapidapi.com/mail/send',
-    headers: {
-        'content-type': 'application/json',
-        'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',
-        'X-RapidAPI-Host': 'rapidprod-sendgrid-v1.p.rapidapi.com'
-    },
-    data: '{"personalizations":[{"to":[{"email":"gaetan.charronbalat@limayrac.fr}],"subject":"Hello, World!"}],"from":{"email":"utilisateur.firebase@gmail.com"},"content":[{"type":"text/plain","value":"Hello, World!"}]}'
-};
-
-axios.request(options).then(function (response) {
-    console.log(response.data);
-}).catch(function (error) {
-    console.error(error);
-});*/
-
-$(document).ready(function(){
-    $('#bouton-forget').click(function(){
-        var settings = {
-            "url": "https://api.sendgrid.com/v3/mail/send",
-            "method": "POST",
-            "timeout": 0,
-            "headers": {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer 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"
-            },
-            "data": JSON.stringify({
-                "personalizations": [
-                    {
-                        "to": [
-                            {
-                                "email": "gaetan.charronbalat@limayrac.fr"
-                            }
-                        ]
-                    }
-                ],
-                "from": {
-                    "email": "utilisateur.firebase@gmail.com"
-                },
-                "subject": "Hello, World!",
-                "content": [
-                    {
-                        "type": "text/plain",
-                        "value": "Heya!"
-                    }
-                ],
-                "template_id": "MYDESIGN"
-            }),
-        };
-
-        $.ajax(settings).done(function (response) {
-            console.log(response);
-        });
-    });
 });
