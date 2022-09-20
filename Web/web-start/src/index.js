@@ -949,7 +949,7 @@ messageInputElement.addEventListener('input', function() {
     counterChar.innerHTML = messageInputElement.value.length + '/1000'
 });
 
-const nodemailer = require('nodemailer');
+/*const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
     service: 'hotmail',
